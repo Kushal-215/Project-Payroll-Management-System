@@ -1,143 +1,159 @@
-*{
+/* --------------------------------------
+   Reset and Base Styles
+-----------------------------------------*/
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
-body{
-    background-color: #b7c3d5;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-}
-.container{
-    display:grid;
-    grid-template-columns: 20% 80%;
-    height: 100vh;
-    grid-template-areas: "s m";
-}
-.side-bar{
-    grid-area: s;
-    background-color: #2c3e50;
-    color: white;
-    padding: 20px;
-    overflow: auto;
 }
 
-.main-content{
-    grid-area: m;
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+/* --------------------------------------
+   Dashboard Container (Sidebar + Main)
+-----------------------------------------*/
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* --------------------------------------
+   Sidebar Styling
+-----------------------------------------*/
+.sidebar {
+    width: 350px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: space-between;
+    border-radius: 10px 0 0 10px;
+}
+
+/* Logo */
+.sidebar .logo {
+    font-weight: 600;
+    font-size: 40px;
+    color: #ff007f;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Sidebar Menu */
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-item {
+    color: #ccc;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background: linear-gradient(90deg, #ff0000, #8000ff);
+    color: #fff;
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+    margin-top: 20px;
+}
+
+/* --------------------------------------
+   Main Content Styling
+-----------------------------------------*/
+.main-content {
+    flex: 1;
     padding: 20px;
 }
-.header-main{
+
+/* Header */
+.header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: 10px;
+    margin-bottom: 30px;
 }
-.header p{
-    font-size: 12px;
-    opacity: 0.7;
-    text-decoration: underline;
-    font-style: italic;
+
+.header .welcome h1 {
+    font-size: 28px;
 }
-.content-body{
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search {
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+}
+
+/* Stats Cards */
+.stats-cards {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.card {
+    flex: 1;
+    padding: 30px;
+    height: 200px;
+    border-radius: 15px;
+    color: #333;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+.card1 .material-icons {
+    width: 100px;
+    height: 100px;
+    background-color: black;
+    border-radius: 100%;
+    color: white;
+    
+}
+
+/* Individual Card Colors */
+.card1 { background-color: #AAE9D8; }
+.card2 { background-color: #D3A188; }
+.card3 { background-color: #9EDAEA; }
+.card4 { background-color: #F9FDA3; }
+
+/* Dashboard Sections */
+.dashboard-sections {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    grid-template-areas: 
-    "TE PP PA TD"
-    "AN AN PH PH"
-    "AT AT PH PH";
-    margin: auto 25px;
-}
-.total-employee{
-    grid-area: TE;
-    background-color: #3498db;
-    padding: 20px;
-    border-radius: 10px;
-    height: 100px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.payroll-proceeded{
-    grid-area: PP;
-    background-color: #2ecc71;
-    padding: 20px;
-    border-radius: 10px;
-    height: 100px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.pending-pay{
-    grid-area: PA;
-    background-color: #e74c3c;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-    height: 100px;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.tax-and-deduction{
-    grid-area: TD;
-    background-color: #f1c40f;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.announcements{
-    grid-area: AN;
-    background-color: #9b59b6;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.payroll-history{
-    grid-area: PH;
-    background-color: #34495e;
-    padding: 20px;
-    border-radius: 10px;
-    height: 500px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.atten{
-    grid-area: AT;
-    background-color: #1abc9c;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.header-main input, button{
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
+.section {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 120px;
 }
-.header-main input{
-    width: 300px;
 
-}
-.header-main button{
-    cursor: pointer;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-
+/* Adjust grid for 3rd section */
+.dashboard-sections .section:nth-child(3) {
+    grid-column: span 2;
 }
