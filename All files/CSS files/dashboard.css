@@ -137,6 +137,39 @@ body {
     
 }
 
+.card2 .material-icons {
+    width: 80px;
+    height: 80px;
+    background-color: #9D4444;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.card3 .material-icons {
+    width: 80px;
+    height: 80px;
+    background-color: #2971B1;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.card4 .material-icons {
+    width: 80px;
+    height: 80px;
+    background-color: #A2A918;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
 /* Individual Card Colors */
 .card1 { background-color: #AAE9D8; }
 .card2 { background-color: #D3A188; }
