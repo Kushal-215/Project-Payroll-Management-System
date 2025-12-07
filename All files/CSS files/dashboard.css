@@ -13,6 +13,7 @@ body {
     color: #333;
 }
 
+
 /* --------------------------------------
    Dashboard Container (Sidebar + Main)
 -----------------------------------------*/
@@ -122,14 +123,17 @@ body {
     align-items: flex-start;
     gap: 10px;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 18px;
 }
 .card1 .material-icons {
-    width: 100px;
-    height: 100px;
-    background-color: black;
-    border-radius: 100%;
+    width: 80px;
+    height: 80px;
+    background-color: #12B5A2;
+    border-radius: 50%;
     color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
 }
 
@@ -144,88 +148,6 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-<<<<<<< HEAD
-    grid-template-areas: 
-    "TE PP PA TD"
-    "AN AN PH PH"
-    "AT AT PH PH";
-    margin: auto 25px;
-}
-.total-employee{
-    grid-area: TE;
-    background-color: #3498db;
-    padding: 20px;
-    border-radius: 10px;
-    height: 100px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.payroll-proceeded{
-    grid-area: PP;
-    background-color: #2ecc71;
-    padding: 20px;
-    border-radius: 10px;
-    height: 100px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.pending-pay{
-    grid-area: PA;
-    background-color: #e74c3c;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-    height: 100px;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.tax-and-deduction{
-    grid-area: TD;
-    background-color: #f1c40f;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.announcements{
-    grid-area: AN;
-    background-color: #D9D9D9;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.payroll-history{
-    grid-area: PH;
-    background-color: #34495e;
-    padding: 20px;
-    border-radius: 10px;
-    height: 500px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-.atten{
-    grid-area: AT;
-    background-color: #1abc9c;
-    padding: 20px;
-    border-radius: 10px;
-    color: white;
-    font-size: 18px;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-=======
->>>>>>> 0469006c1d0b29e4d6c1f45e6742660ac618ef1d
 }
 
 .section {
