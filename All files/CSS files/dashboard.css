@@ -95,7 +95,7 @@ body{
 }
 .announcements{
     grid-area: AN;
-    background-color: #9b59b6;
+    background-color: #D9D9D9;
     padding: 20px;
     border-radius: 10px;
     color: white;
