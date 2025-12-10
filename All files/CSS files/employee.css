@@ -1,12 +1,13 @@
 .sec1 p{
     font-weight: normal;
     font-size: 14px;
+    height: 30px;
 }
 .sec1 hr{
     margin-top: 10px;
     margin-bottom: 10px;
     border: 0;
-    border-top: 0.5px solid #eee;
+    border-top: 0.5px solid #CBCBCB;
 }
 
 .sec1 .material-icons{
@@ -24,18 +25,34 @@
 .sec1 table{
     width: 100%;
     border: none;
+    height: auto;
 
 }
 .sec2{
     background-color:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) ;
+    width: 50%;
 }
 .stat{
     text-align: center;
-    padding: 20px;
-    background-color: lime;
-    border-radius: 40px;;
+    padding: 10px;
+    background-color: #68EC9D;
+    border-radius: 40px;
+    color: #19861C;
 }
 td{
     padding: 10px;
     text-align: center;
+}
+.card2 .material-icons{
+    background-color: #B00F0F;
+}
+.card2{
+    background-color: #D38888;
+}
+.dataTable {
+    margin-top: -10px;
+    margin-left: -20px;
+}
+.dashboard-sections {
+    grid-template-columns: 66.5% 33.5%;;
 }
