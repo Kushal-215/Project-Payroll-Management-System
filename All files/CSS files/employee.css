@@ -56,3 +56,13 @@ td{
 .dashboard-sections {
     grid-template-columns: 66.5% 33.5%;;
 }
+.section .employee-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+.section sec2{
+    width: 100%;
+}
