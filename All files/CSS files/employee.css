@@ -29,3 +29,13 @@
 .sec2{
     background-color:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) ;
 }
+.stat{
+    text-align: center;
+    padding: 20px;
+    background-color: lime;
+    border-radius: 40px;;
+}
+td{
+    padding: 10px;
+    text-align: center;
+}
