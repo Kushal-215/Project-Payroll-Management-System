@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - User</title>
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="./userCSS/userDashboard.css">
+    <!-- Google Material Icons for icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Logo -->
+            <div class="logo">ABC MARKETING</div>
+            <!-- Navigation Menu -->
+            <nav class="menu">
+                <a href="./dashboard.html" class="menu-item active">
+                    <span class="material-icons">home</span> Dashboard
+                </a>
+                <a href="./employee.html" class="menu-item">
+                    <span class="material-icons">people</span> Employees
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">check_box</span> Attendance
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">credit_card</span> Payroll
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">description</span> Payslip
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">bar_chart</span> Report Analytics
+                </a>
+            </nav>
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <a href="#" class="menu-item">
+                    <span class="material-icons">settings</span> Settings
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="welcome">
+                    Welcome, user_name
+                    <h1>Dashboard Overview</h1>
+                </div>
+                <div class="header-actions">
+                    <input type="text" placeholder="search now" class="search">
+                    <span class="material-icons">notifications</span>
+                    <span class="material-icons account">account_circle</span>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <section class="stats-cards">
+                <div class="card card1">
+                    <span class="material-icons">calendar_today</span>
+                    <span class="cardInfo">
+                    <h3 style="font-weight: bold;">Attendence</h3>
+                    <p>Present Days : </p>
+                    <p>Absent Days : </p>
+                    <p>Late : </p>
+                    <p class="cardFooter">Attendence for this month</p>
+                    </span>
+                    
+                </div>
+                <div class="card card2">
+                    <span class="material-icons">event_busy</span>
+                    <span class="cardInfo">
+                    <h3 style="font-weight: bold;">Leave</h3>
+                    <p>Leave Balance : </p>
+                    <p>Pending: </p>
+                    <p class="cardFooter">Leave summary this month</p>
+                    </span>
+                </div>
+                <div class="card card3">
+                    <span class="material-icons">update</span>
+                    <span class="cardInfo">
+                    <h3 style="font-weight: bold;">Work Updates</h3>
+                    <p>New tasks: </p>
+                    <p>Pending Tasks: </p>
+                    <p class="cardFooter">Tasks of this month</p>
+                    </span>
+                </div>
+                
+            </section>
+
+            <!-- Dashboard Sections -->
+            <section class="dashboard-sections">
+                <div class="section announce">
+                    <h2>Announcements</h2>
+                    <hr style="background: black; height: 2px; border: none;">
+                    <ul>
+                        <li>Holiday Schedule for Christmas</li>
+                        <li>Please Update your KYC documents</li>
+                    </ul>
+                </div>
+                <div class="section atten">
+                    <h2>Attendance</h2>
+                    <table class="attenTable">
+                        <tr class="lined">
+                            <th>Date</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Status</th>
+                        </tr>
+                        <tr>
+                            <td>Dec 1</td>
+                            <td>9:00 AM</td>
+                            <td>5:00 PM</td>
+                            <td>Present</td>
+                        </tr>
+                    </table>
+
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,0 +1,255 @@
+/* --------------------------------------
+   Reset and Base Styles
+-----------------------------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+
+/* --------------------------------------
+   Dashboard Container (Sidebar + Main)
+-----------------------------------------*/
+.dashboard-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* --------------------------------------
+   Sidebar Styling
+-----------------------------------------*/
+.sidebar {
+    width: 350px;
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    justify-content: space-between;
+    border-radius: 10px 0 0 10px;
+}
+
+/* Logo */
+.sidebar .logo {
+    font-weight: 600;
+    font-size: 40px;
+    color: #ff007f;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+/* Sidebar Menu */
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-item {
+    color: #ccc;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+.menu-item:hover,
+.menu-item.active {
+    background: linear-gradient(90deg, #ff0000, #8000ff);
+    color: #fff;
+    transform: scale(1.13);
+}
+.menu-item.active{
+    transform: scale();
+}
+
+/* Sidebar Footer */
+.sidebar-footer {
+    margin-top: 20px;
+}
+
+/* --------------------------------------
+   Main Content Styling
+-----------------------------------------*/
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.header .welcome h1 {
+    font-size: 28px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.search {
+    padding: 5px 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+}
+
+/* Stats Cards */
+.stats-cards {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.card {
+    flex: 1;
+    padding: 30px;
+    height: 200px;
+    border-radius: 15px;
+    color: #333;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    background-color: #BEBEBE;
+}
+/* Individual Card icons */
+.card1 .material-icons {
+    width: 80px;
+    height: 80px;
+    background-color: #12B5A2;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.card2 .material-icons {
+    width: 80px;
+    height: 80px;
+    background-color: #2B59F1   ;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.card3 .material-icons {
+    width: 80px;
+    height: 80px;
+    background-color: #2971B1;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.card4 .material-icons {
+    width: 80px;
+    height: 80px;
+    background-color: #A2A918;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+/* Dashboard Sections */
+.dashboard-sections {
+    display: grid;
+    grid-template-rows: repeat(2,1fr);
+    gap: 20px;
+}
+
+.section {
+    background-color: #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 120px;
+}
+
+/* Adjust grid for 3rd section */
+.dashboard-sections .section:nth-child(3) {
+    grid-column: span 2;
+}
+.cardInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-weight: normal;
+    font-size: 14px;
+}
+.cardInfo h3{
+    font-size: 18px;
+}
+.cardFooter {
+    opacity: 0.7;
+    font-size: 15px;
+    margin-top: auto;
+}
+/* This wrapper controls the vertical layout */
+.card2 .cardInfo {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.card3 .cardInfo{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.card1 .cardInfo {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.attenTable{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0 8px;
+}
+.attenTable th{
+    text-align: left;
+    padding: 10px 15px;
+    font-weight: bold;
+}
+.attenTable td{
+    padding: 10px 15px;
+}
+.attenTable .lined{
+    border-top: 2px solid black;
+    border-bottom: 2px solid    black;
+}
+.announce li{
+    list-style-type: disc;
+    margin-left: 25px;
+    margin-top: 20px;
+    padding: 5px;
+}
+.announce h2, .atten h2{
+    margin-left: 30px;
+}
