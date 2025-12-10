@@ -1,0 +1,31 @@
+.sec1 p{
+    font-weight: normal;
+    font-size: 14px;
+}
+.sec1 hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 0.5px solid #eee;
+}
+
+.sec1 .material-icons{
+    float: right;
+    cursor: pointer;
+    color: black;
+    background-color: #9D9A9A;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;   
+}
+.sec1 table{
+    width: 100%;
+    border: none;
+
+}
+.sec2{
+    background-color:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) ;
+}

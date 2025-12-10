@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employees - Admin</title>
+    <!-- Link to external CSS -->
+    <link rel="stylesheet" href="./CSS files/dashboard.css">
+    <link rel="stylesheet" href="./CSS files/employee.css">
+    <!-- Google Material Icons for icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <!-- Main Dashboard Container -->
+    <div class="dashboard-container">
+        
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <!-- Logo -->
+            <div class="logo">ABC MARKETING</div>
+            <!-- Navigation Menu -->
+            <nav class="menu">
+                <a href="./dashboard.html" class="menu-item ">
+                    <span class="material-icons">home</span> Dashboard
+                </a>
+                <a href="./employee.html" class="menu-item active">
+                    <span class="material-icons">people</span> Employees
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">check_box</span> Attendance
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">credit_card</span> Payroll
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">description</span> Payslip
+                </a>
+                <a href="#" class="menu-item">
+                    <span class="material-icons">bar_chart</span> Report Analytics
+                </a>
+            </nav>
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <a href="#" class="menu-item">
+                    <span class="material-icons">settings</span> Settings
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="welcome">
+                    <h1>Employees</h1>
+                </div>
+                
+                <div class="header-actions">
+                    <input type="text" placeholder="search now" class="search">
+                    <span class="material-icons">notifications</span>
+                    <span class="material-icons account">account_circle</span>
+                </div>
+                
+            </header>
+            <hr>
+
+            <!-- Stats Cards -->
+            <section class="stats-cards">
+                <div class="card card1">
+                    <span class="material-icons">groups</span>
+                    <p>Total Employee</p>
+                </div>
+                <div class="card card3">
+                    <span class="material-icons">payment</span>
+                    <p>Active Employees</p>
+                </div>
+                <div class="card card2">
+                    <span class="material-icons">credit_card</span>
+                    <p>Inactive Employees</p>
+                </div>
+            </section>
+
+            <!-- Dashboard Sections -->
+            <section class="dashboard-sections">
+                <span class="section-left ">
+                    <div class="section sec1">
+                        <span class="material-icons">add</span> 
+                        <h2>Employee List</h2>
+                        <p>Here are employees payroll information for the month</p>
+                        <hr>
+                        <table>
+                            <tr>
+                            <th>Employee Name</th>
+                            <th>Position</th>
+                            <th>Department</th>
+                            <th>Status</th>
+                            </tr>
+                            <tr>
+                            <td>John Doe</td>
+                            <td>Software Engineer</td>
+                            <td>IT</td>
+                            <td>Active</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                </span>
+                    <div class="section sec2"></div>
+            </section>
+        </main>
+
+    </div>
+</body>
+</html>
