@@ -9,7 +9,6 @@
     border: 0;
     border-top: 0.5px solid #CBCBCB;
 }
-
 .sec1 .material-icons{
     float: right;
     cursor: pointer;
@@ -24,8 +23,9 @@
 }
 .sec1 table{
     width: 100%;
-    border: none;
+    border: 2px solid black;
     height: auto;
+    text-align: left;
 
 }
 .sec2{
@@ -38,20 +38,29 @@
     background-color: #68EC9D;
     border-radius: 40px;
     color: #19861C;
+    max-width: 200px;
+    display: block;
+    width:150px;
+    float:right;
 }
 td{
     padding: 10px;
     text-align: center;
 }
-.card2 .material-icons{
-    background-color: #B00F0F;
+.card1 .material-icons{
+    background-color: #12B5A2;
 }
-.card2{
-    background-color: #D38888;
+.card2
+{
+    background-color: #D3A188;
+}
+.card2 .material-icons{
+    color: #9D4444;
 }
 .dataTable {
     margin-top: -10px;
     margin-left: -20px;
+    text-align: center;
 }
 .dashboard-sections {
     grid-template-columns: 66.5% 33.5%;;
