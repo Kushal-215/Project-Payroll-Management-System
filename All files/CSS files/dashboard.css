@@ -11,6 +11,8 @@ body {
     font-family: 'Arial', sans-serif;
     background-color: #f0f0f0;
     color: #333;
+    height: 100vh;
+    margin: 0;
 }
 
 
@@ -19,7 +21,7 @@ body {
 -----------------------------------------*/
 .dashboard-container {
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 /* --------------------------------------
@@ -67,6 +69,7 @@ body {
 .menu-item.active {
     background: linear-gradient(90deg, #ff0000, #8000ff);
     color: #fff;
+    transform: scale(1.13);
 }
 
 /* Sidebar Footer */
@@ -79,7 +82,8 @@ body {
 -----------------------------------------*/
 .main-content {
     flex: 1;
-    padding: 20px;
+    max-height: 100%;
+    box-sizing: border-box;
 }
 
 /* Header */
@@ -179,16 +183,35 @@ body {
 /* Dashboard Sections */
 .dashboard-sections {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+        "An Ph"
+        "At Ph";
     gap: 20px;
+}
+.An{
+    grid-area: An;
+}
+.At{
+    grid-area: At;
+
+}
+.Ph{
+    grid-area: Ph;
+}
+.An ,.At, .Ph {
+    display: flex;
+    height: auto;
+    flex: 1;
 }
 .section {
     background-color: #e0e0e0;
     border-radius: 10px;
-    padding: 20px;
     min-height: 120px;
+    flex: 1;
 }
 /* Adjust grid for 3rd section */
 .dashboard-sections  {
-    grid-column: span 2;
+    flex: 1;
 }
