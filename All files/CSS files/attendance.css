@@ -1,0 +1,102 @@
+.sec1 p{
+    font-weight: normal;
+    font-size: 14px;
+    height: 30px;
+}
+.sec1 hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 0.5px solid #CBCBCB;
+}
+.sec1 .material-icons{
+    float: right;
+    cursor: pointer;
+    color: black;
+    background-color: #9D9A9A;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;   
+}
+.sec1 table{
+    width: 100%;
+    height: auto;
+    text-align: left;
+
+}
+.sec2{
+    background-color:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) ;
+    width: 50%;
+}
+.stat {
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 110px;
+  text-align: center;
+}
+
+.on-time {
+  background: #6ef0a1;
+  color: #0b6b3a;
+}
+
+.late {
+  background: #e6e36d;
+  color: #6a6400;
+}
+
+.overtime {
+  background: #9ee3f2;
+  color: #005f73;
+}
+
+.card1{ background-color: #AAE9D8;}
+.card2{ background-color: #9EDAEA;}
+.card3{ background-color: #D3A188;}
+.card4{ background-color: #F9FDA3;}
+.card2 .material-icons{ background-color: #2971B1;}
+.card3 .material-icons{ background-color: #9D4444;}
+.card1 .material-icons{ background-color: #12B5A2;}
+.card4 .material-icons{ background-color: #DC7E19;} 
+
+.dashboard-sections {
+    grid-template-columns: 66.5% 33.5%;;
+}
+.section .employee-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+.section sec2{
+    width: auto;
+}
+.attendance-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.attendance-table thead tr {
+  width:20%;
+  text-align: center;
+  border-bottom: 2px solid #cfcfcf;
+}
+
+.attendance-table tbody tr {
+    width: 20%;
+    text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+.attendance-table th,
+.attendance-table td {
+  padding: 16px 12px;
+  vertical-align: middle;
+}
+

@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employees - Admin</title>
+    <title>Attendance - Admin</title>
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="./CSS files/dashboard.css">
-    <link rel="stylesheet" href="./CSS files/employee.css">
+    <link rel="stylesheet" href="./CSS files/attendance.css">
     <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -23,10 +23,10 @@
                 <a href="./dashboard.html" class="menu-item ">
                     <span class="material-icons">home</span> Dashboard
                 </a>
-                <a href="./employee.html" class="menu-item ">
+                <a href="./employee.html" class="menu-item">
                     <span class="material-icons">people</span> Employees
                 </a>
-                <a  href="./attendance.html" class="menu-item">
+                <a  href="./attendance.html" class="menu-item active">
                     <span class="material-icons">check_box</span> Attendance
                 </a>
                 <a href="#" class="menu-item">
@@ -52,7 +52,7 @@
             <!-- Header -->
             <header class="header">
                 <div class="welcome">
-                    <h1>Employees</h1>
+                    <h1>Attendance</h1>
                 </div>
                 
                 <div class="header-actions">
@@ -67,17 +67,20 @@
             <!-- Stats Cards -->
             <section class="stats-cards">
                 <div class="card card1">
-                    <span class="material-icons">groups</span>
-                    <p>Total Employee</p>
-                </div>
-                <div class="card card2">
-                    <span class="material-icons">groups</span>
-                    <p>Active Employees</p>
+                    <span class="material-icons">check_circle</span>
+                    <p>Presence</p>
                 </div>
                 <div class="card card3">
                     <span class="material-icons">groups</span>
-                    <p>Inactive Employees</p>
+                    <p>Absence</p>
                 </div>
+                <div class="card card2">
+                    <span class="material-icons">groups</span>
+                    <p> Overtime</p>
+                </div>
+                <div class="card card4">
+                    <span class="material-icons">check_circle</span>
+                    <p> Late</p>
             </section>
 
             <!-- Dashboard Sections -->
@@ -85,29 +88,46 @@
                 <span class="section-left ">
                     <div class="section sec1">
                         <span class="material-icons">add</span> 
-                        <h2>Employee List</h2>
-                        <p>Here are employees payroll information for the month</p>
+                        <h2>Attendance</h2>
+                        <p>Here is the attendance list</p>
                         <hr>
-                        <table>
-                            <tr>
+                        <table class="attendance-table">
+                            <thead>
+                            <tr >
                             <th>Employee Name</th>
-                            <th>Position</th>
-                            <th>Department</th>
+                            <th>Check-in</th>
+                            <th>Check-out</th>
+                            <th>Date</th>
                             <th>Status</th>
                             </tr>
-                        </table>
-                        <hr>
-                        <table class="dataTab">
+                            </thead>
+                            <tbody>
                             <tr>
                             <td>John Doe</td>
-                            <td>Software Engineer</td>
-                            <td>IT</td>
-                            <td class="stat">Active</td>
+                            <td>5:0</td>
+                            <td>6:0</td>
+                            <td>2025</td>
+                            <td >
+                            <span class="stat on-time"> On time </span> </td>
                             </tr>
+                            <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><span class="stat late"> Late </span></td>
+                            </tr>
+                            <tr>
+                            <td></td>
+                            <td> </td>
+                            <td></td>
+                            <td></td>
+                            <td><span class="stat overtime">Overtime </span></tr>
+                            </tr>
+                            </tbody>
                         </table>
-                    </div>
-                    
-                </span>
+                        </div>
+                    </span>
                     <div class="section sec2">
                             <span class="employee-card head">
                                 <img src="" alt="*">
