@@ -63,4 +63,18 @@
 .section sec2{
     width: auto;
 }
+.attenTable{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0 8px;
+}  
+.attenTable th{
+    text-align: left;
+    padding: 10px 15px;
+    font-weight: bold;
+}
+.attenTable .lined{
+    border-top: 2px solid black;
+    border-bottom: 2px solid    black;
+}
 
