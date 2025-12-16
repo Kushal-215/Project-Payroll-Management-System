@@ -212,8 +212,7 @@ body {
     min-height: 120px;
     flex: 1;
 }
-<<<<<<< HEAD
-=======
+
 /* Adjust grid for 3rd section */
 .dashboard-sections  {
 <<<<<<< HEAD
@@ -227,12 +226,8 @@ body {
 }
 .menu-item.active{
     transform: scale();
-=======
+
     flex: 1;
-<<<<<<< HEAD
+
 }
-=======
->>>>>>> 9faf9e0df14fc2b6e915912f6e69045f9eb2ed8f
-}
->>>>>>> 71ed38bc9dd09ebbee579804c16702fe461d9137
->>>>>>> 4150ec20915c4506f8e3955cd8bcff7b4673cb40
+
