@@ -1,0 +1,91 @@
+.sec1 p{
+    font-weight: normal;
+    font-size: 14px;
+    height: 30px;
+}
+.sec1 hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 0.5px solid #CBCBCB;
+}
+
+.sec1 .material-icons{
+    float: right;
+    cursor: pointer;
+    color: black;
+    background-color: #9D9A9A;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;   
+}
+.sec1 table{
+    width: 100%;
+    border: none;
+    height: auto;
+
+}
+.sec2{
+    background-color:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) ;
+    width: 50%;
+}
+.dashboard-sections {
+    grid-template-columns: 66.5% 33.5%;;
+}
+.section .employee-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+.section sec2{
+    width: auto;
+}
+.card1{ background-color: #C596E0;}
+.card2{ background-color: #D3A188;}
+.card3{ background-color: #9EDAEA;}
+.card1 .material-icons{ background-color: #8F2197;}
+.card2 .material-icons{ background-color: #972D0F;}
+.card3 .material-icons{ background-color: #2971B1;}
+
+.stat {
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+  min-width: 110px;
+  text-align: center;
+}
+
+.on-time {
+  background: #6ef0a1;
+  color: #0b6b3a;
+}
+
+.pending {
+  background: #e6e36d;
+  color: #6a6400;
+}
+.datapay{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0 8px;
+}
+.datapay th{
+    text-align: center;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+.datapay td{
+    padding: 10px 30px;
+    text-align: center;
+}
+.datapay .hrpay{
+    border-bottom:2px solid black;
+    border-top: 2px solid black;
+}

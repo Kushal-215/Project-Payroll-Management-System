@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Attendance - Admin</title>
+    <title>Payroll - Admin</title>
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="./CSS files/dashboard.css">
-    <link rel="stylesheet" href="./CSS files/attendance.css">
+    <link rel="stylesheet" href="./CSS files/payroll.css">
     <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -23,19 +23,20 @@
                 <a href="./dashboard.html" class="menu-item ">
                     <span class="material-icons">home</span> Dashboard
                 </a>
-                <a href="./employee.html" class="menu-item">
+                <a href="./employee.html" class="menu-item ">
                     <span class="material-icons">people</span> Employees
                 </a>
-                <a  href="./attendance.html" class="menu-item active">
+                <a  href="./attendance.html" class="menu-item">
                     <span class="material-icons">check_box</span> Attendance
                 </a>
                 <a  href="./payroll.html" class="menu-item">
                     <span class="material-icons">credit_card</span> Payroll
                 </a>
-                <a href="./payslip.html" class="menu-item">
+                <a href="#" class="menu-item">
                     <span class="material-icons">description</span> Payslip
                 </a>
-                <a href="./report&ana" class="menu-item">
+
+                <a href="#" class="menu-item">
                     <span class="material-icons">bar_chart</span> Report Analytics
                 </a>
             </nav>
@@ -52,7 +53,7 @@
             <!-- Header -->
             <header class="header">
                 <div class="welcome">
-                    <h1>Attendance</h1>
+                    <h1>Payroll-this month,Year</h1>
                 </div>
                 
                 <div class="header-actions">
@@ -67,20 +68,17 @@
             <!-- Stats Cards -->
             <section class="stats-cards">
                 <div class="card card1">
-                    <span class="material-icons">check_circle</span>
-                    <p>Presence</p>
+                    <span class="material-icons">groups</span>
+                    <p>Total Employee</p>
                 </div>
                 <div class="card card3">
                     <span class="material-icons">groups</span>
-                    <p>Absence</p>
+                    <p>Active Employees</p>
                 </div>
                 <div class="card card2">
                     <span class="material-icons">groups</span>
-                    <p> Overtime</p>
+                    <p>Inactive Employees</p>
                 </div>
-                <div class="card card4">
-                    <span class="material-icons">check_circle</span>
-                    <p> Late</p>
             </section>
 
             <!-- Dashboard Sections -->
@@ -88,45 +86,35 @@
                 <span class="section-left ">
                     <div class="section sec1">
                         <span class="material-icons">add</span> 
-                        <h2>Attendance</h2>
-                        <p>Here is the attendance list</p>
-                        <table class="attenTable">
-                            <thead>
-                            <tr class="lined" >
+                        <h2>Payroll Activities</h2>
+                        <p>Here are employees payroll information for the month</p>
+                        <table class="datapay">
+                            <tr class="hrpay">
                             <th>Employee Name</th>
-                            <th>Check-in</th>
-                            <th>Check-out</th>
-                            <th>Date</th>
+                            <th>Position</th>
+                            <th>Department</th>
+                            <th>Net Salary</th>
                             <th>Status</th>
                             </tr>
-                            </thead>
-                            <tbody>
                             <tr>
                             <td>John Doe</td>
-                            <td>5:0</td>
-                            <td>6:0</td>
-                            <td>2025</td>
+                            <td>Software Engineer</td>
+                            <td>IT</td>
+                            <td>40000</td>
                             <td >
                             <span class="stat on-time"> On time </span> </td>
                             </tr>
-                            <tr>
+                             <tr>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td><span class="stat late"> Late </span></td>
+                            <td><span class="stat pending"> Pending </span></td>
                             </tr>
-                            <tr>
-                            <td></td>
-                            <td> </td>
-                            <td></td>
-                            <td></td>
-                            <td><span class="stat overtime">Overtime </span></tr>
-                            </tr>
-                            </tbody>
                         </table>
-                        </div>
-                    </span>
+                    </div>
+                    
+                </span>
                     <div class="section sec2">
                             <span class="employee-card head">
                                 <img src="" alt="*">
@@ -135,9 +123,12 @@
                             </span>
                             <span class="employee-card info">
                                 <p>Department</p>
-                                <p>Joining Dates</p>
-                                <p>Salary</p>
-                                <option>Attendance History
+                                <p>Status</p>
+                                <p>Basic Salary</p>
+                                <p>Overtime & bonuses</p>
+                                <p>Deduction</p>
+                                <p>Net Salary</p>
+                                <option>Bank Details
                                     <select name="" id="">view all</select>
                                 </option>
                                 <option>Payroll History
