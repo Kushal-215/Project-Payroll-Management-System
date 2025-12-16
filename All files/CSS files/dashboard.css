@@ -3,7 +3,7 @@
 -----------------------------------------*/
 * {
     margin: 0;
-    padding: 10 ;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -212,7 +212,6 @@ body {
     min-height: 120px;
     flex: 1;
 }
-
 /* Adjust grid for 3rd section */
 .dashboard-sections  {
 <<<<<<< HEAD
@@ -226,8 +225,11 @@ body {
 }
 .menu-item.active{
     transform: scale();
-
+=======
     flex: 1;
-
+<<<<<<< HEAD
 }
-
+=======
+>>>>>>> 9faf9e0df14fc2b6e915912f6e69045f9eb2ed8f
+}
+>>>>>>> 71ed38bc9dd09ebbee579804c16702fe461d9137
