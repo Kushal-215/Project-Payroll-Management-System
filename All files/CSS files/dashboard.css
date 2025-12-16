@@ -80,10 +80,11 @@ body {
 /* --------------------------------------
    Main Content Styling
 -----------------------------------------*/
-.main-content {
+
+.main-content{
     flex: 1;
-    max-height: 100%;
-    box-sizing: border-box;
+    padding: 20px;
+    overflow-y: auto;
 }
 
 /* Header */

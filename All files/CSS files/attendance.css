@@ -9,24 +9,8 @@
     border: 0;
     border-top: 0.5px solid #CBCBCB;
 }
-.sec1 .material-icons{
-    float: right;
-    cursor: pointer;
-    color: black;
-    background-color: #9D9A9A;
-    width: 30px;
-    height: 30px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;   
-}
-.sec1 table{
-    width: 100%;
-    height: auto;
-    text-align: left;
 
-}
+
 .sec2{
     background-color:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) ;
     width: 50%;
@@ -67,6 +51,7 @@
 
 .dashboard-sections {
     grid-template-columns: 66.5% 33.5%;;
+    
 }
 .section .employee-card {
     display: flex;
@@ -77,26 +62,5 @@
 }
 .section sec2{
     width: auto;
-}
-.attendance-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.attendance-table thead tr {
-  width:20%;
-  text-align: center;
-  border-bottom: 2px solid #cfcfcf;
-}
-
-.attendance-table tbody tr {
-    width: 20%;
-    text-align: center;
-  border-bottom: 1px solid #e0e0e0;
-}
-.attendance-table th,
-.attendance-table td {
-  padding: 16px 12px;
-  vertical-align: middle;
 }
 
