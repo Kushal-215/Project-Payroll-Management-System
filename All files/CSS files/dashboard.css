@@ -3,7 +3,7 @@
 -----------------------------------------*/
 * {
     margin: 0;
-    padding: 0;
+    padding: 10 ;
     box-sizing: border-box;
 }
 
@@ -210,21 +210,4 @@ body {
     border-radius: 10px;
     min-height: 120px;
     flex: 1;
-}
-/* Adjust grid for 3rd section */
-.dashboard-sections  {
-<<<<<<< HEAD
-    grid-column: span 2;
-}
-.menu-item:hover,
-.menu-item.active {
-    background: linear-gradient(90deg, #ff0000, #8000ff);
-    color: #fff;
-    transform: scale(1.13);
-}
-.menu-item.active{
-    transform: scale();
-=======
-    flex: 1;
->>>>>>> 9faf9e0df14fc2b6e915912f6e69045f9eb2ed8f
 }
