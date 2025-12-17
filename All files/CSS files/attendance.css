@@ -63,4 +63,31 @@
 .section sec2{
     width: auto;
 }
+.attenTable{
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0 8px;
+}
+.attenTable th{
+    text-align: center;
+    padding: 10px 20px;
+    font-weight: bold;
+}
+.attenTable td{
+    padding: 10px 30px;
+    text-align: center;
+}
+.attenTable .lined{
+    border-bottom:2px solid black;
+    border-top: 2px solid black;
+}
+.dashboard-sections h2{
+    margin: 15px;
+    padding: 15px;
+}
+.dashboard-sections .material-icons{
+    margin-left: 10px;
+    margin-top: 10px;
+
+}
 

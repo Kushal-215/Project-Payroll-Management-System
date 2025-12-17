@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employees - Admin</title>
+    <title>Payslip - Admin</title>
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="./CSS files/dashboard.css">
-    <link rel="stylesheet" href="./CSS files/employee.css">
+    <link rel="stylesheet" href="./CSS files/payslip.css">
     <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -23,7 +23,7 @@
                 <a href="./dashboard.html" class="menu-item ">
                     <span class="material-icons">home</span> Dashboard
                 </a>
-                <a href="./employee.html" class="menu-item active ">
+                <a href="./employee.html" class="menu-item ">
                     <span class="material-icons">people</span> Employees
                 </a>
                 <a  href="./attendance.html" class="menu-item">
@@ -32,7 +32,7 @@
                 <a  href="./payroll.html" class="menu-item">
                     <span class="material-icons">credit_card</span> Payroll
                 </a>
-                <a href="./payslip.html" class="menu-item">
+                <a href="./payslip.html" class="menu-item active">
                     <span class="material-icons">description</span> Payslip
                 </a>
                 <a href="./report.html" class="menu-item">
@@ -52,7 +52,7 @@
             <!-- Header -->
             <header class="header">
                 <div class="welcome">
-                    <h1>Employees</h1>
+                    <h1>Payslip</h1>
                 </div>
                 
                 <div class="header-actions">
@@ -68,15 +68,15 @@
             <section class="stats-cards">
                 <div class="card card1">
                     <span class="material-icons">groups</span>
-                    <p>Total Employee</p>
+                    <p>Total Payslip</p>
                 </div>
                 <div class="card card2">
                     <span class="material-icons">groups</span>
-                    <p>Active Employees</p>
+                    <p>Overtime & Bonuses</p>
                 </div>
                 <div class="card card3">
                     <span class="material-icons">groups</span>
-                    <p>Inactive Employees</p>
+                    <p>Deduction</p>
                 </div>
             </section>
 
@@ -85,21 +85,35 @@
                 <span class="section-left ">
                     <div class="section sec1">
                         <span class="material-icons">add</span> 
-                        <h2>Employee List</h2>
-                        <p>Here are employees payroll information for the month</p>
+                        <h2>Payslip List</h2>
+                        <p>Here are employees payslip information </p>
                         <table class="empay">
                             <tr class="dapay">
                             <th>Employee Name</th>
-                            <th>Position</th>
-                            <th>Department</th>
-                            <th>Status</th>
+                            <th>Monthly Salary</th>
+                            <th>Deduction</th>
+                            <th>Bonuses</th>
+                            <th>Net Salary</th>
+                            <th>Payslip Status</th>
                             </tr>
                             <tr>
                             <td>John Doe</td>
                             <td>Software Engineer</td>
                             <td>IT</td>
+                            <td></td>
+                            <td ></td>
                             <td >
-                                <span class="stat active">Active </span>
+                                <span class="stat paid">Paid </span>
+                            </td>
+                            </tr>
+                            <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td ></td>
+                            <td >
+                                <span class="stat pending">Pending</span>
                             </td>
                             </tr>
                         </table>

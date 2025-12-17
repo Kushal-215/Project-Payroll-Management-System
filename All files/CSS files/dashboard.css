@@ -123,7 +123,7 @@ body {
     padding: 30px;
     height: 200px;
     border-radius: 15px;
-    color: #333;
+    color: #000000;
     display: flex;
     align-items: flex-start;
     gap: 10px;
@@ -191,6 +191,9 @@ body {
         "At Ph";
     gap: 20px;
 }
+.dashboard-sections h2{
+    margin: 15px;
+}
 .An{
     grid-area: An;
 }
@@ -212,11 +215,9 @@ body {
     min-height: 120px;
     flex: 1;
 }
-<<<<<<< HEAD
-=======
+
 /* Adjust grid for 3rd section */
 .dashboard-sections  {
-<<<<<<< HEAD
     grid-column: span 2;
 }
 .menu-item:hover,
@@ -227,10 +228,5 @@ body {
 }
 .menu-item.active{
     transform: scale();
-=======
     flex: 1;
-<<<<<<< HEAD
-}
-=======
->>>>>>> 9faf9e0df14fc2b6e915912f6e69045f9eb2ed8f
 }
