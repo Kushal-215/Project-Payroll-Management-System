@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - User</title>
+    <title>Leave Management - User</title>
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="./userCSS/userDashboard.css">
-    <link rel="stylesheet" href="./userCSS/userAttendence.css">
+    <link rel="stylesheet" href="./userCSS/userLeave.css">
     <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -23,7 +23,7 @@
                 <a href="./userDashboard.html" class="menu-item ">
                     <span class="material-icons">home</span> Dashboard
                 </a>
-                <a href="./userAttendence.html" class="menu-item active">
+                <a href="./userAttendence.html" class="menu-item">
                     <span class="material-icons">check_box</span> Attendence
                 </a>
                 <a href="#" class="menu-item">
@@ -32,10 +32,10 @@
                 <a href="#" class="menu-item">
                     <span class="material-icons">mail</span> Work Updates
                 </a>
-                <a href="./userLeave.html" class="menu-item">
+                <a href="./userLeave.html" class="menu-item active">
                     <span class="material-icons">event_busy</span> Leave Management
                 </a>
-                <a href="#" class="menu-item">
+                <a href="./userPaysilp.html" class="menu-item">
                     <span class="material-icons">description</span> Payslip
                 </a>
             </nav>
@@ -53,7 +53,7 @@
             <header class="header">
                 <div class="welcome">
                     Welcome, user_name
-                    <h1>Dashboard Overview</h1>
+                    <h1>Leave Management</h1>
                 </div>
                 <div class="header-actions">
                     <input type="text" placeholder="search now" class="search">
@@ -66,27 +66,27 @@
             <section class="stats-cards">
                 <div class="card card1">
                     <span class="cardInfo">
-                        <h2>24</h2>
-                        <p>Total Working Days</p>
+                        <h2>4 </h2>
+                        <p>Total leave Days</p>
                     </span>
                     
                 </div>
                 <div class="card card2">
                    <span class="cardInfo">
-                        <h2>22</h2>
-                        <p>Days Present</p>
+                        <h2>3</h2>
+                        <p>Remaining Days </p>
                     </span>
                 </div>
                 <div class="card card3">
                     <span class="cardInfo">
-                        <h2>2</h2>
-                        <p>Days Absent</p>
+                        <h2>1</h2>
+                        <p>Leave Used</p>
                     </span>
                 </div>
                 <div class="card card4">
                     <span class="cardInfo">
-                        <h2>4</h2>
-                        <p>Late</p>
+                        <h2>1</h2>
+                        <p>Pending Requests</p>
                     </span>
                 </div>
                 
@@ -95,33 +95,34 @@
             <!-- Dashboard Sections -->
             <section class="dashboard-sections">
                 <div class="section atten">
-                    <div class="attenHead">
-                    <h2>Attendance Log</h2>
-                    <select name="opt" id="">
-                        <option value="december">All</option>
-                        <option value="november">November</option>
-                        <option value="october">October</option>
-                    </select>
-                    <select name="opt" id="">
-                        <option value="december">December</option>
-                        <option value="november">November</option>
-                        <option value="october">October</option>
-                    </select>
-                    <button>Download PDF</button>
-                    </div>
+                    <h2>Leave Requests</h2>
+                    <div class="leaveReq">
+                    <span class="reqDate">Date<input type="date" value="Date"> </span>
+                    <span class="leaveType">
+                        Type
+                        <select name="leaveType" id="">
+                            <option value="Sick">Sick</option>
+                            <option value="Sick">Sick</option>
+                            <option value="Sick">Sick</option>
+                        </select>
+                    </span>
+                    <button>Request Leave</button>
+                </div>
+                </div>
+                <div class="section atten">
+                    <h2>Leave History</h2>
                     <table class="attenTable">
                         <tr class="lined">
                             <th>Date</th>
-                            <th>Check-in</th>
-                            <th>Check-out</th>
+                            <th>Type</th>
                             <th>Status</th>
-                            <th>Working hours</th>
+                            <th>Action</th>
                         </tr>
                         <tr>
                             <td>Dec 1</td>
-                            <td>9:00 AM</td>
-                            <td>5:00 PM</td>
-                            <td>Present</td>
+                            <td>Sick</td>
+                            <td>Approved</td>
+                            <td><button>View</button></td>
                         </tr>
                     </table>
 

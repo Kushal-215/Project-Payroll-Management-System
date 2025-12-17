@@ -1,0 +1,52 @@
+
+.card1 ,.card2 ,.card3 ,.card4 {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
+}
+.card .cardInfo h2{
+    font-size: 46px;
+    text-align: center;
+    align-items: center;
+}
+.card .cardInfo p{
+    font-size: 18px;
+    text-align: center;
+    align-items: center;
+    float: bottom;
+}
+.leaveReq{
+    display: flex;
+    margin-top: 20px;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 20px;
+    margin-left: 30px;
+    margin: 20px 20px 20px 20px;
+}
+.leaveReq select, .leaveReq button ,.leaveReq input[type="date"]{
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: transparent;
+    cursor: pointer;
+    font-size: 15px;
+    margin-right: 10px;
+}
+.leaveReq input[type="date"], .leaveReq select{
+    width: 500px;
+    text-align: center;
+}
+.reqDate, .leaveType{
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    font-weight: bold;
+}
+.leaveReq button{
+    background: #8B93F0;
+    border: 1px solid #281D8D;
+    padding: 10px 20px;
+}

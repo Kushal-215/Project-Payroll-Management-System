@@ -1,0 +1,31 @@
+.attenHead{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.attenHead select, .attenHead button{
+    padding: 8px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background: transparent;
+    cursor: pointer;
+    margin-right: 100px;
+}
+.card1 ,.card2 ,.card3 ,.card4 {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    height: 100%;
+}
+.card .cardInfo h2{
+    font-size: 46px;
+    text-align: center;
+    align-items: center;
+}
+.card .cardInfo p{
+    font-size: 18px;
+    text-align: center;
+    align-items: center;
+    float: bottom;
+}

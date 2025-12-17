@@ -1,0 +1,60 @@
+.payslip{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 30px;
+    max-width: 700px;
+    width: 100%;
+    margin: auto;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.payHead
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+.payHead h1{
+    font-size: 28px;
+    font-weight: 600;
+    
+}
+.payHead button {
+    padding: 6px 14px;
+    border-radius: 20px;
+    border: 1px solid #999;
+    background: #ddd;
+    cursor: pointer;
+    
+}
+.info {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+.info p{
+    margin: 10px 0;
+}
+hr {
+  border: none;
+  height: 2px;
+  background-color: #000000;
+  margin: 25px 0;
+}
+.section h3 {
+  margin-bottom: 10px;
+}
+.section h4 {
+  margin: 10px 0 5px;
+}
+
+.section p {
+  margin: 5px 0;
+}
+
+.indent {
+  padding-left: 20px;
+}
