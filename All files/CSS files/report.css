@@ -92,3 +92,7 @@
 .card p{
     margin-top: -10px;
 }
+.pending {
+  background: #e6e36d;
+  color: #6a6400;
+}

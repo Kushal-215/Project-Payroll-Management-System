@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employees - Admin</title>
+    <title>Report - Admin</title>
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="./CSS files/dashboard.css">
-    <link rel="stylesheet" href="./CSS files/employee.css">
+    <link rel="stylesheet" href="./CSS files/payslip.css">
     <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -23,7 +23,7 @@
                 <a href="./dashboard.html" class="menu-item ">
                     <span class="material-icons">home</span> Dashboard
                 </a>
-                <a href="./employee.html" class="menu-item active ">
+                <a href="./employee.html" class="menu-item ">
                     <span class="material-icons">people</span> Employees
                 </a>
                 <a  href="./attendance.html" class="menu-item">
@@ -32,10 +32,10 @@
                 <a  href="./payroll.html" class="menu-item">
                     <span class="material-icons">credit_card</span> Payroll
                 </a>
-                <a href="./payslip.html" class="menu-item">
+                <a href="./payslip.html" class="menu-item ">
                     <span class="material-icons">description</span> Payslip
                 </a>
-                <a href="./report.html" class="menu-item">
+                <a href="./reportana.html" class="menu-item active">
                     <span class="material-icons">bar_chart</span> Report Analytics
                 </a>
             </nav>
@@ -52,7 +52,7 @@
             <!-- Header -->
             <header class="header">
                 <div class="welcome">
-                    <h1>Employees</h1>
+                    <h1>Report and Analytics</h1>
                 </div>
                 
                 <div class="header-actions">
@@ -68,15 +68,15 @@
             <section class="stats-cards">
                 <div class="card card1">
                     <span class="material-icons">groups</span>
-                    <p>Total Employee</p>
+                    <p>Total Payslip</p>
                 </div>
                 <div class="card card2">
                     <span class="material-icons">groups</span>
-                    <p>Active Employees</p>
+                    <p>Overtime & Bonuses</p>
                 </div>
                 <div class="card card3">
                     <span class="material-icons">groups</span>
-                    <p>Inactive Employees</p>
+                    <p>Deduction</p>
                 </div>
             </section>
 
@@ -84,43 +84,14 @@
             <section class="dashboard-sections">
                 <span class="section-left ">
                     <div class="section sec1">
-                        <span class="material-icons">add</span> 
-                        <h2>Employee List</h2>
-                        <p>Here are employees payroll information for the month</p>
-                        <table class="empay">
-                            <tr class="dapay">
-                            <th>Employee Name</th>
-                            <th>Position</th>
-                            <th>Department</th>
-                            <th>Status</th>
-                            </tr>
-                            <tr>
-                            <td>John Doe</td>
-                            <td>Software Engineer</td>
-                            <td>IT</td>
-                            <td >
-                                <span class="stat active">Active </span>
-                            </td>
-                            </tr>
-                        </table>
+                        <span class="material-icons">download</span> 
+                        <h2>Payroll Expenses Breakdown</h2>
+                        <p>Here is the graph, </p>
                     </div>
                 </span>
                     <div class="section sec2">
                             <span class="employee-card head">
-                                <img src="" alt="*">
-                                <h3>Employee name </h3>
-                                <p>Position</p>
-                            </span>
-                            <span class="employee-card info">
-                                <p>Department</p>
-                                <p>Joining Dates</p>
-                                <p>Salary</p>
-                                <option>Attendance History
-                                    <select name="" id="">view all</select>
-                                </option>
-                                <option>Payroll History
-                                    <select name="" id="">view all</select>
-                                </option>
+                                <h2>Salary Pie Chart</h2>
                             </span>
                     </div>
             </section>
