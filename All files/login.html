@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>PMS Login</title>
+    <link rel="stylesheet" href="./CSS files/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="login-container">
+
+    <!-- Left Section -->
+    <div class="login-left">
+        <h1>Payroll<br>Management System</h1>
+        <p>Manage employees, payroll, attendance<br>and reports efficiently.</p>
+    </div>
+
+    <!-- Right Section -->
+    <div class="login-right">
+        <form class="login-card">
+            <h2>Welcome Back</h2>
+            <span>Please login to your account</span>
+            <div class="role-selection">
+                <label class="role-option">
+                    <input type="radio" name="role" value="admin" checked>
+                    <span>Admin</span>
+                </label>
+
+                <label class="role-option">
+                    <input type="radio" name="role" value="user">
+                    <span>User</span>
+                </label>
+            </div>
+
+            <div class="input-group">
+                <label>Email / Username</label>
+                    <input type="text" placeholder="Enter your email">
+            </div>
+
+            <div class="input-group">
+                <label>Password</label>
+                     <input type="password" placeholder="Enter your password">
+            </div>
+
+            <div class="options">
+                <label>
+                    <input type="checkbox"> Remember me
+                </label>
+                <a href="#">Forgot password?</a>
+            </div>
+
+            <button type="submit">Login</button>
+
+            <p class="role-text">Access provided based on your role (Admin/User)</p>
+        </form>
+    </div>
+
+</div>
+
+</body>
+</html>
