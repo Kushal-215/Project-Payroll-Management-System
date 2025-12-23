@@ -215,7 +215,10 @@ body {
     min-height: 120px;
     flex: 1;
 }
+<<<<<<< HEAD:All files/CSS files/dashboard.css
 
+=======
+>>>>>>> 09d50dc4f6766925b89ae50c1d1c0847cb80a0d2:adminSide/CSS files/dashboard.css
 /* Adjust grid for 3rd section */
 .dashboard-sections  {
     grid-column: span 2;

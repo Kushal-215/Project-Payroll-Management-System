@@ -6,7 +6,7 @@
     <title>Dashboard - User</title>
     <!-- Link to external CSS -->
     <link rel="stylesheet" href="./userCSS/userDashboard.css">
-    <link rel="stylesheet" href="./userCSS/userPayslip.css">
+    <link rel="stylesheet" href="./userCSS/userAnnouncements.css">
     <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
@@ -26,16 +26,16 @@
                 <a href="./userAttendence.html" class="menu-item">
                     <span class="material-icons">check_box</span> Attendence
                 </a>
-                <a href="#" class="menu-item">
+                <a href="./userAnnouncements.html" class="menu-item active">
                     <span class="material-icons">notifications</span> Announcements
                 </a>
-                <a href="./userWorkUpdates.html" class="menu-item">
+                <a href="./userWorkUpdates.html" class="menu-item ">
                     <span class="material-icons">mail</span> Work Updates
                 </a>
                 <a href="./userLeave.html" class="menu-item ">
                     <span class="material-icons">event_busy</span> Leave Management
                 </a>
-                <a href="./userPaysilp.html" class="menu-item active">
+                <a href="./userPaysilp.html" class="menu-item ">
                     <span class="material-icons">description</span> Payslip
                 </a>
             </nav>
@@ -64,52 +64,10 @@
 
             <!-- Stats Cards -->
             <section class="dashboard-sections">
-                <div class="section payslip">
-                    <div class="payHead">
-                    <h1>Payslip</h1>
-                    <button>Download pdf</button>
-                    </div>
-
-                    <div class="info">
-                    <div>
-                        <p><strong>Employee name:</strong></p>
-                        <p><strong>Employee ID:</strong></p>
-                        <p><strong>Position:</strong></p>
-                    </div>
-
-                    <div>
-                        <p><strong>Company name:</strong></p>
-                        <p><strong>Company Address:</strong></p>
-                        <p><strong>Payslip for:</strong></p>
-                    </div>
-                    </div>
-
-                    <hr class="lined">
-
-                    <div class="section">
-                    <h3>Earnings</h3>
-                    <p>Basic Salary:</p>
-
-                    <h4>Allowances</h4>
-                    <p class="indent">Transport:</p>
-                    <p class="indent">Food:</p>
-                    </div>
-
-                    <hr>
-
-                    <div class="section">
-                    <h3>Deductions</h3>
-                    <p>Tax:</p>
-                    <p>Insurance:</p>
-                    </div>
-                     <hr>
-
-                    <div class="section">
-                    <h3>Net Salary</h3>
-                    </div>
-
-                </div>
-                
+                <div class="section announce">
+                    <!-- Announcements Content Here -->
+                    <h2>Announcements</h2>
+                    <p>No new announcements at this time.</p>
             </section>
         </main>
     </div>

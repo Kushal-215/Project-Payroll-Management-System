@@ -67,6 +67,7 @@
     width: 100%;
     border-collapse: collapse;
     border-spacing: 0 8px;
+<<<<<<< HEAD:All files/CSS files/attendance.css
 }
 .attenTable th{
     text-align: center;
@@ -89,5 +90,28 @@
     margin-left: 10px;
     margin-top: 10px;
 
+=======
+}  
+.attenTable th{
+    text-align: left;
+    padding: 10px 15px;
+    font-weight: bold;
 }
-
+.attenTable .lined{
+    border-top: 2px solid black;
+    border-bottom: 2px solid    black;
+>>>>>>> 09d50dc4f6766925b89ae50c1d1c0847cb80a0d2:adminSide/CSS files/attendance.css
+}
+.sec1 .material-icons{
+    float: right;
+    cursor: pointer;
+    color: black;
+    background-color: #9D9A9A;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;   
+    margin: 10px;
+}
