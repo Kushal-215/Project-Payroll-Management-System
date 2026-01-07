@@ -102,23 +102,33 @@
                     </div>
                 </span>
                     <div class="section sec2">
-                            <span class="employee-card head">
-                                <img src="" alt="*">
-                                <h3>Employee name </h3>
-                                <p>Position</p>
-                            </span>
-                            <span class="employee-card info">
-                                <p>Department</p>
-                                <p>Joining Dates</p>
-                                <p>Salary</p>
-                                <option>Attendance History
-                                    <select name="" id="">view all</select>
-                                </option>
-                                <option>Payroll History
-                                    <select name="" id="">view all</select>
-                                </option>
-                            </span>
+                        <span class="employee-card head">
+                            <img src="" alt="*">
+                            <h3 id="detail-name">Select an employee</h3>
+                            <p id="detail-position">—</p>
+                        </span>
+
+                        <span class="employee-card info">
+                            <p><strong>Department:</strong> <span id="detail-department">—</span></p>
+                            <p><strong>Status:</strong> <span id="detail-status">—</span></p>
+                            <p><strong>Basic Salary:</strong> Rs <span id="detail-salary">—</span></p>
+                            <button onclick="openConfirmPopup()" style="margin-top:10px;">Delete Employee</button>
+
+
+
+                            <div>
+                                Attendance History
+                                <select><option>view all</option></select>
+                            </div>
+
+
+                            <div>
+                                Payroll History
+                                <select><option>view all</option></select>
+                            </div>
+                        </span>
                     </div>
+
             </section>
         </main>
 
@@ -149,7 +159,26 @@
 
     <p id="response"></p>
   </div>
+  
+</div>
+<div id="confirmPopup" class="pop">
+  <div class="pop-content">
+    <h3>Confirm Deletion</h3>
+    <p>Are you sure you want to delete this employee?</p>
+
+    <button onclick="confirmDelete()" style="background:#d9534f;color:white;">
+      Yes, Delete
+    </button>
+    <button onclick="closeConfirmPopup()" style="margin-left:10px;">
+      Cancel
+    </button>
+  </div>
+
     <script>
+
+        let selectedEmployeeId = null;
+
+
     // Open/Close Popup
     function openPopup() {
         document.getElementById("popup").style.display = "block";
@@ -161,31 +190,81 @@
 
     // Load all employees from backend and populate the table
     function loadEmployees() {
-        fetch("http://localhost:5000/employees")
-            .then(res => res.json())
-            .then(data => {
-                const table = document.getElementById("employeeTable");
-                table.innerHTML = ""; // clear old rows
+    fetch("http://localhost:5000/employees")
+        .then(res => res.json())
+        .then(data => {
+            const table = document.getElementById("employeeTable");
+            table.innerHTML = "";
 
-                data.forEach(emp => {
-                    const row = document.createElement("tr");
-                    row.innerHTML = `
-                        <td>${emp.name}</td>
-                        <td>${emp.position}</td>
-                        <td>${emp.department}</td>
-                        <td>
-                            <span class="stat ${emp.status.toLowerCase()}">
-                                ${emp.status}
-                            </span>
-                        </td>
-                    `;
-                    table.appendChild(row);
-                });
-            })
-            .catch(err => {
-                console.error("Failed to load employees:", err);
+            data.forEach(emp => {
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${emp.name}</td>
+                    <td>${emp.position}</td>
+                    <td>${emp.department}</td>
+                    <td>
+                        <span class="stat ${emp.status.toLowerCase()}">
+                            ${emp.status}
+                        </span>
+                    </td>
+                `;
+
+                row.onclick = () => showEmployeeDetails(emp);
+                table.appendChild(row);
+
+
             });
+        });
+}
+
+   function showEmployeeDetails(emp) {
+    selectedEmployeeId = emp.id;
+
+    document.getElementById("detail-name").innerText = emp.name;
+    document.getElementById("detail-position").innerText = emp.position;
+    document.getElementById("detail-department").innerText = emp.department;
+    document.getElementById("detail-status").innerText = emp.status;
+    document.getElementById("detail-salary").innerText = emp.basic_salary;
+}
+function confirmDelete() {
+    fetch(`http://localhost:5000/delete_employee/${selectedEmployeeId}`, {
+        method: "DELETE"
+    })
+    .then(res => res.json())
+    .then(result => {
+        closeConfirmPopup();
+        alert(result.message);
+
+        selectedEmployeeId = null;
+
+        document.getElementById("detail-name").innerText = "Select an employee";
+        document.getElementById("detail-position").innerText = "—";
+        document.getElementById("detail-department").innerText = "—";
+        document.getElementById("detail-status").innerText = "—";
+        document.getElementById("detail-salary").innerText = "—";
+
+        loadEmployees();
+    })
+    .catch(err => console.error(err));
+}
+
+function openConfirmPopup() {
+    if (!selectedEmployeeId) {
+        alert("Please select an employee first");
+        return;
     }
+    document.getElementById("confirmPopup").style.display = "block";
+}
+
+function closeConfirmPopup() {
+    document.getElementById("confirmPopup").style.display = "none";
+}
+
+
+
+
+
 
     // Call loadEmployees on page load
     document.addEventListener("DOMContentLoaded", loadEmployees);
