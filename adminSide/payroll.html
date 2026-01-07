@@ -89,29 +89,19 @@
                         <h2>Payroll Activities</h2>
                         <p>Here are employees payroll information for the month</p>
                         <table class="datapay">
+                        <thead>
                             <tr class="hrpay">
-                            <th>Employee Name</th>
-                            <th>Position</th>
-                            <th>Department</th>
-                            <th>Net Salary</th>
-                            <th>Status</th>
+                                <th>Employee Name</th>
+                                <th>Position</th>
+                                <th>Department</th>
+                                <th>Net Salary</th>
+                                <th>Status</th>
                             </tr>
-                            <tr>
-                            <td>John Doe</td>
-                            <td>Software Engineer</td>
-                            <td>IT</td>
-                            <td>40000</td>
-                            <td >
-                            <span class="stat on-time"> On time </span> </td>
-                            </tr>
-                             <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><span class="stat pending"> Pending </span></td>
-                            </tr>
-                        </table>
+                        </thead>
+                        <tbody id="payrollTable">
+                            <!-- Data will come from backend -->
+                        </tbody>
+                    </table>
                     </div>
                     
                 </span>
@@ -140,5 +130,32 @@
         </main>
 
     </div>
+    <script>
+    function loadPayroll() {
+        fetch("http://localhost:5000/employees")
+            .then(res => res.json())
+            .then(data => {
+                const table = document.getElementById("payrollTable");
+                table.innerHTML = "";
+
+                data.forEach(emp => {
+                    const row = document.createElement("tr");
+
+                    row.innerHTML = `
+                        <td>${emp.name}</td>
+                        <td>${emp.position}</td>
+                        <td>IT</td>
+                        <td>Pending</td>
+                        <td><span class="stat pending">Pending</span></td>
+                    `;
+
+                    table.appendChild(row);
+                });
+            });
+    }
+
+    // Load payroll automatically
+    loadPayroll();
+    </script>
 </body>
 </html>

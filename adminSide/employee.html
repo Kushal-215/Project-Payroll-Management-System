@@ -84,24 +84,21 @@
             <section class="dashboard-sections">
                 <span class="section-left ">
                     <div class="section sec1">
-                        <span class="material-icons">add</span> 
+                        <span class="material-icons" onclick="openPopup()">add</span> 
                         <h2>Employee List</h2>
                         <p>Here are employees payroll information for the month</p>
                         <table class="empay">
+                        <thead>
                             <tr class="dapay">
                             <th>Employee Name</th>
                             <th>Position</th>
                             <th>Department</th>
                             <th>Status</th>
                             </tr>
-                            <tr>
-                            <td>John Doe</td>
-                            <td>Software Engineer</td>
-                            <td>IT</td>
-                            <td >
-                                <span class="stat active">Active </span>
-                            </td>
-                            </tr>
+                        </thead>
+                        <tbody id="employeeTable">
+                            <!-- rows will be inserted here -->
+                        </tbody>
                         </table>
                     </div>
                 </span>
@@ -127,5 +124,108 @@
         </main>
 
     </div>
+    <div id="popup" class="pop">
+  <div class="pop-content">
+    <span class="close" onclick="closePopup()">&times;</span>
+
+    <h3>Add Employee</h3>
+
+    <form id="employeeForm">
+        <input type="text" id="name" placeholder="Employee Name" required><br><br>
+
+        <input type="text" id="position" placeholder="Position" required><br><br>
+
+        <input type="text" id="department" placeholder="Department" required><br><br>
+
+        <input type="number" id="basic_salary" placeholder="Basic Salary" required><br><br>
+
+        <select id="status" required>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+        </select><br><br>
+
+        <button type="submit">Add Employee</button>
+    </form>
+
+
+    <p id="response"></p>
+  </div>
+    <script>
+    // Open/Close Popup
+    function openPopup() {
+        document.getElementById("popup").style.display = "block";
+    }
+
+    function closePopup() {
+        document.getElementById("popup").style.display = "none";
+    }
+
+    // Load all employees from backend and populate the table
+    function loadEmployees() {
+        fetch("http://localhost:5000/employees")
+            .then(res => res.json())
+            .then(data => {
+                const table = document.getElementById("employeeTable");
+                table.innerHTML = ""; // clear old rows
+
+                data.forEach(emp => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${emp.name}</td>
+                        <td>${emp.position}</td>
+                        <td>${emp.department}</td>
+                        <td>
+                            <span class="stat ${emp.status.toLowerCase()}">
+                                ${emp.status}
+                            </span>
+                        </td>
+                    `;
+                    table.appendChild(row);
+                });
+            })
+            .catch(err => {
+                console.error("Failed to load employees:", err);
+            });
+    }
+
+    // Call loadEmployees on page load
+    document.addEventListener("DOMContentLoaded", loadEmployees);
+
+    // Handle Add Employee form submission
+    document.getElementById("employeeForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        const data = {
+            name: document.getElementById("name").value,
+            position: document.getElementById("position").value,
+            department: document.getElementById("department").value,
+            basic_salary: parseInt(document.getElementById("basic_salary").value),
+            status: document.getElementById("status").value
+        };
+
+        fetch("http://localhost:5000/add_employee", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(result => {
+            document.getElementById("response").innerText = result.message;
+            document.getElementById("employeeForm").reset();
+            closePopup();
+
+            // Reload the employee table dynamically after adding
+            loadEmployees();
+        })
+        .catch(err => {
+            console.error(err);
+            alert("Failed to add employee");
+        });
+    });
+</script>
+
+</div>
 </body>
 </html>

@@ -4,32 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Attendance - Admin</title>
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="./CSS files/dashboard.css">
     <link rel="stylesheet" href="./CSS files/attendance.css">
-    <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <!-- Main Dashboard Container -->
     <div class="dashboard-container">
-        
         <!-- Sidebar -->
         <aside class="sidebar">
-            <!-- Logo -->
             <div class="logo">ABC MARKETING</div>
-            <!-- Navigation Menu -->
             <nav class="menu">
-                <a href="./dashboard.html" class="menu-item ">
+                <a href="./dashboard.html" class="menu-item">
                     <span class="material-icons">home</span> Dashboard
                 </a>
                 <a href="./employee.html" class="menu-item">
                     <span class="material-icons">people</span> Employees
                 </a>
-                <a  href="./attendance.html" class="menu-item active">
+                <a href="./attendance.html" class="menu-item active">
                     <span class="material-icons">check_box</span> Attendance
                 </a>
-                <a  href="./payroll.html" class="menu-item">
+                <a href="./payroll.html" class="menu-item">
                     <span class="material-icons">credit_card</span> Payroll
                 </a>
                 <a href="./payslip.html" class="menu-item">
@@ -39,7 +33,6 @@
                     <span class="material-icons">bar_chart</span> Report Analytics
                 </a>
             </nav>
-            <!-- Sidebar Footer -->
             <div class="sidebar-footer">
                 <a href="#" class="menu-item">
                     <span class="material-icons">settings</span> Settings
@@ -47,20 +40,17 @@
             </div>
         </aside>
 
-        <!-- Main Content Area -->
+        <!-- Main Content -->
         <main class="main-content">
-            <!-- Header -->
             <header class="header">
                 <div class="welcome">
                     <h1>Attendance</h1>
                 </div>
-                
                 <div class="header-actions">
                     <input type="text" placeholder="search now" class="search">
                     <span class="material-icons">notifications</span>
                     <span class="material-icons account">account_circle</span>
                 </div>
-                
             </header>
             <hr>
 
@@ -76,74 +66,116 @@
                 </div>
                 <div class="card card2">
                     <span class="material-icons">groups</span>
-                    <p> Overtime</p>
+                    <p>Overtime</p>
                 </div>
                 <div class="card card4">
                     <span class="material-icons">check_circle</span>
-                    <p> Late</p>
+                    <p>Late</p>
+                </div>
             </section>
 
             <!-- Dashboard Sections -->
             <section class="dashboard-sections">
-                <span class="section-left ">
+                <span class="section-left">
                     <div class="section sec1">
-                        <span class="material-icons">add</span> 
+                        <span class="material-icons">add</span>
                         <h2>Attendance</h2>
                         <p>Here is the attendance list</p>
                         <table class="attenTable">
-                            <tr class="lined" >
-                            <th>Employee Name</th>
-                            <th>Check-in</th>
-                            <th>Check-out</th>
-                            <th>Date</th>
-                            <th>Status</th>
-                            </tr>
-                            <tr>
-                            <td>John Doe</td>
-                            <td>5:0</td>
-                            <td>6:0</td>
-                            <td>2025</td>
-                            <td >
-                            <span class="stat on-time"> On time </span> </td>
-                            </tr>
-                            <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><span class="stat late"> Late </span></td>
-                            </tr>
-                            <tr>
-                            <td></td>
-                            <td> </td>
-                            <td></td>
-                            <td></td>
-                            <td><span class="stat overtime">Overtime </span></tr>
-                            </tr>
+                            <thead>
+                                <tr class="lined">
+                                    <th>Employee Name</th>
+                                    <th>Check-in</th>
+                                    <th>Check-out</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="attendanceTable">
+                                <!-- Dynamic rows will be inserted here -->
+                            </tbody>
                         </table>
-                        </div>
-                    </span>
-                    <div class="section sec2">
-                            <span class="employee-card head">
-                                <img src="" alt="*">
-                                <h3>Employee name </h3>
-                                <p>Position</p>
-                            </span>
-                            <span class="employee-card info">
-                                <p>Department</p>
-                                <p>Joining Dates</p>
-                                <p>Salary</p>
-                                <option>Attendance History
-                                    <select name="" id="">view all</select>
-                                </option>
-                                <option>Payroll History
-                                    <select name="" id="">view all</select>
-                                </option>
-                            </span>
                     </div>
+                </span>
+
+                <div class="section sec2">
+                    <span class="employee-card head">
+                        <img src="" alt="*">
+                        <h3 id="detailName">Employee name</h3>
+                        <p id="detailPosition">Position</p>
+                    </span>
+                    <span class="employee-card info">
+                        <p id="detailDepartment">Department</p>
+                        <p id="detailJoining">Joining Dates</p>
+                        <p id="detailSalary">Salary</p>
+                        <option>Attendance History
+                            <select id="attendanceHistory">view all</select>
+                        </option>
+                        <option>Payroll History
+                            <select id="payrollHistory">view all</select>
+                        </option>
+                    </span>
+                </div>
             </section>
         </main>
-
     </div>
+
+    <script>
+        // Load attendance from backend
+        function loadAttendance() {
+            fetch("http://localhost:5000/attendance")
+                .then(res => res.json())
+                .then(data => {
+                    const table = document.getElementById("attendanceTable");
+                    table.innerHTML = "";
+
+                    data.forEach(record => {
+                        const row = document.createElement("tr");
+
+                        // Assign class based on status (on-time, late, overtime)
+                        let statusClass = "on-time";
+                        if (record.status.toLowerCase() === "late") statusClass = "late";
+                        else if (record.status.toLowerCase() === "overtime") statusClass = "overtime";
+
+                        row.innerHTML = `
+                            <td>${record.employee_name}</td>
+                            <td>${record.check_in}</td>
+                            <td>${record.check_out}</td>
+                            <td>${record.date}</td>
+                            <td><span class="stat ${statusClass}">${record.status}</span></td>
+                        `;
+
+                        // Click row to show details
+                        row.addEventListener("click", () => showEmployeeDetails(record));
+
+                        table.appendChild(row);
+                    });
+                })
+                .catch(err => {
+                    console.error("Failed to load attendance:", err);
+                    document.getElementById("attendanceTable").innerHTML =
+                        `<tr><td colspan="5">Failed to load data</td></tr>`;
+                });
+        }
+
+        // Show selected employee details in sec2 panel
+        function showEmployeeDetails(record) {
+            document.getElementById("detailName").innerText = record.employee_name;
+            document.getElementById("detailPosition").innerText = record.position || "-";
+            document.getElementById("detailDepartment").innerText = record.department || "-";
+            document.getElementById("detailJoining").innerText = record.joining_date || "-";
+            document.getElementById("detailSalary").innerText = record.salary || "-";
+
+            // Optional: populate attendance and payroll history selects
+            const attSelect = document.getElementById("attendanceHistory");
+            attSelect.innerHTML = `<option>View all</option>`; // Replace with real history if available
+
+            const paySelect = document.getElementById("payrollHistory");
+            paySelect.innerHTML = `<option>View all</option>`; // Replace with real history if available
+        }
+
+        // Load attendance when page loads
+        document.addEventListener("DOMContentLoaded", loadAttendance);
+    </script>
 </body>
 </html>
