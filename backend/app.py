@@ -97,6 +97,17 @@ def get_attendance():
     return jsonify(sample_data)
 
 
+@app.route("/delete_employee/<int:emp_id>", methods=["DELETE"])
+def delete_employee(emp_id):
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM employees WHERE id = ?", (emp_id,))
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Employee deleted successfully"})
+
 
 # Calculate salary
 @app.route("/calculate-salary", methods=["POST"])

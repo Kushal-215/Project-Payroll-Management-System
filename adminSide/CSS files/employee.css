@@ -30,7 +30,7 @@
 }
 .sec2{
     background-color:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) ;
-    width: 50%;
+    width: 94%;
 }
 .stat{
     text-align: center;
@@ -142,4 +142,32 @@
     border-radius: 8px;
     cursor: pointer;
     margin-top: 10px;
+}
+.empay tbody tr {
+    cursor: pointer;
+}
+.empay tbody tr:hover {
+    background-color: #7e7878f1;
+}
+.pop {
+    display: none;
+    position: fixed;          /* sit above everything */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;            /* above main content */
+    background: white;        /* popup box itself */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+/* Add overlay effect behind popup (optional) */
+.pop::before {
+    content: "";
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: rgba(0,0,0,0.4); /* semi-transparent overlay */
+    z-index: -1; /* behind popup content */
 }
