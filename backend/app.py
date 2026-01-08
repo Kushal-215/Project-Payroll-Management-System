@@ -11,20 +11,38 @@ app = Flask(__name__)
 CORS(app)
 
 # ---------- Database Setup ----------
+import sqlite3
+
 def init_db():
-    with sqlite3.connect(DB_PATH) as conn:
-        cursor = conn.cursor()
-        cursor.execute("""
-            CREATE TABLE IF NOT EXISTS employees (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                position TEXT NOT NULL,
-                department TEXT NOT NULL,
-                basic_salary INTEGER NOT NULL,
-                status TEXT NOT NULL
-            )
-        """)
-        conn.commit()
+    conn = sqlite3.connect("database.db")
+    cursor = conn.cursor()
+
+    # Employees table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS employees (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            position TEXT,
+            department TEXT,
+            joining_date TEXT,
+            salary REAL,
+            status TEXT
+        )
+    """)
+
+    # Attendance table
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS attendance (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            employee_id INTEGER,
+            date TEXT,
+            status TEXT,
+            FOREIGN KEY (employee_id) REFERENCES employees (id)
+        )
+    """)
+
+    conn.commit()
+    conn.close()
 
 init_db()
 
@@ -70,6 +88,66 @@ def add_employee():
 
     return jsonify({"message": "Employee added successfully", "id": employee_id})
 
+
+
+@app.route("/attendance")
+def get_all_attendance():
+    conn = sqlite3.connect("database.db")
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        SELECT 
+            a.id,
+            e.name AS employee_name,
+            a.date,
+            a.status
+        FROM attendance a
+        JOIN employees e ON a.employee_id = e.id
+        ORDER BY a.date DESC
+    """)
+
+    rows = cursor.fetchall()
+    conn.close()
+
+    attendance_list = []
+    for row in rows:
+        attendance_list.append({
+            "id": row["id"],
+            "employee_name": row["employee_name"],
+            "date": row["date"],
+            "status": row["status"]
+        })
+
+    return attendance_list
+
+
+
+@app.route("/update_employee/<int:id>", methods=["PUT"])
+def update_employee(id):
+    data = request.json
+
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        UPDATE employees
+        SET name = ?, position = ?, department = ?, basic_salary = ?, status = ?
+        WHERE id = ?
+    """, (
+        data["name"],
+        data["position"],
+        data["department"],
+        data["basic_salary"],
+        data["status"],
+        id
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Employee updated successfully"})
+
 # Get all employees
 @app.route("/employees", methods=["GET"])
 def get_employees():
@@ -80,6 +158,27 @@ def get_employees():
         employees = [dict(row) for row in rows]
 
     return jsonify(employees)
+
+@app.route("/add-attendance", methods=["POST"])
+def add_attendance():
+    data = request.json
+
+    conn = get_db()
+    cursor = conn.cursor()
+
+    cursor.execute("""
+        INSERT INTO attendance (employee_id, date, status)
+        VALUES (?, ?, ?)
+    """, (
+        data["employee_id"],
+        data["date"],
+        data["status"]
+    ))
+
+    conn.commit()
+    conn.close()
+
+    return jsonify({"message": "Attendance added"})
 
 
 @app.route("/attendance", methods=["GET"])
@@ -132,4 +231,5 @@ def calculate_salary():
 
 # ---------- Run ----------
 if __name__ == "__main__":
+    init_db()
     app.run(debug=True)
