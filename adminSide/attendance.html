@@ -77,7 +77,6 @@
             <section class="dashboard-sections">
                 <span class="section-left">
                     <div class="section sec1">
-                        <span class="material-icons">add</span>
                         <h2>Attendance</h2>
                         <p>Here is the attendance list</p>
                         <table class="attenTable">
@@ -138,10 +137,10 @@
 
                         row.innerHTML = `
                             <td>${record.employee_name}</td>
-                            <td>${record.check_in}</td>
-                            <td>${record.check_out}</td>
+                            <td>-</td>
+                            <td>-</td>
                             <td>${record.date}</td>
-                            <td><span class="stat ${statusClass}">${record.status}</span></td>
+                            <td><span class="stat ${statusClass.toLowerCase()}">${record.status}</span></td>
                         `;
 
                         // Click row to show details
@@ -163,7 +162,9 @@
             document.getElementById("detailPosition").innerText = record.position || "-";
             document.getElementById("detailDepartment").innerText = record.department || "-";
             document.getElementById("detailJoining").innerText = record.joining_date || "-";
-            document.getElementById("detailSalary").innerText = record.salary || "-";
+            document.getElementById("detailSalary").innerText =
+                record.basic_salary ? `Rs ${record.basic_salary}` : "-";
+
 
             // Optional: populate attendance and payroll history selects
             const attSelect = document.getElementById("attendanceHistory");

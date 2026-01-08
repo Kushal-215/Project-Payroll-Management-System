@@ -113,6 +113,8 @@
                             <p><strong>Status:</strong> <span id="detail-status">—</span></p>
                             <p><strong>Basic Salary:</strong> Rs <span id="detail-salary">—</span></p>
                             <button onclick="openConfirmPopup()" style="margin-top:10px;">Delete Employee</button>
+                            <button onclick="openEditPopup()" style="margin-top:10px;">Edit Employee</button>
+
 
 
 
@@ -177,6 +179,8 @@
     <script>
 
         let selectedEmployeeId = null;
+        let isEditMode = false;
+
 
 
     // Open/Close Popup
@@ -248,6 +252,24 @@ function confirmDelete() {
     })
     .catch(err => console.error(err));
 }
+function openEditPopup() {
+    if (!selectedEmployeeId) {
+        alert("Please select an employee first");
+        return;
+    }
+
+    isEditMode = true;
+
+    document.getElementById("name").value = document.getElementById("detail-name").innerText;
+    document.getElementById("position").value = document.getElementById("detail-position").innerText;
+    document.getElementById("department").value = document.getElementById("detail-department").innerText;
+    document.getElementById("basic_salary").value = document.getElementById("detail-salary").innerText;
+    document.getElementById("status").value = document.getElementById("detail-status").innerText;
+
+    document.querySelector("#employeeForm button").innerText = "Update Employee";
+
+    openPopup();
+}
 
 function openConfirmPopup() {
     if (!selectedEmployeeId) {
@@ -281,18 +303,28 @@ function closeConfirmPopup() {
             status: document.getElementById("status").value
         };
 
-        fetch("http://localhost:5000/add_employee", {
-            method: "POST",
+        const url = isEditMode
+            ? `http://localhost:5000/update_employee/${selectedEmployeeId}`
+            : "http://localhost:5000/add_employee";
+
+        const method = isEditMode ? "PUT" : "POST";
+
+        fetch(url, {
+            method: method,
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(data)
         })
+
         .then(res => res.json())
         .then(result => {
             document.getElementById("response").innerText = result.message;
             document.getElementById("employeeForm").reset();
             closePopup();
+            isEditMode = false;
+            document.querySelector("#employeeForm button").innerText = "Add Employee";
+
 
             // Reload the employee table dynamically after adding
             loadEmployees();
