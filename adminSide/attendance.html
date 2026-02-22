@@ -58,18 +58,22 @@
                 <div class="card card1">
                     <span class="material-icons">check_circle</span>
                     <p>Presence</p>
+                    <h2 id="presenceCount">-</h2>
                 </div>
                 <div class="card card3">
                     <span class="material-icons">groups</span>
                     <p>Absence</p>
+                    <h2 id="absenceCount">-</h2>
                 </div>
                 <div class="card card2">
                     <span class="material-icons">groups</span>
                     <p>Overtime</p>
+                    <h2 id="overtimeCount">-</h2>
                 </div>
                 <div class="card card4">
                     <span class="material-icons">check_circle</span>
                     <p>Late</p>
+                    <h2 id="lateCount">-</h2>
                 </div>
             </section>
 
@@ -121,7 +125,7 @@
     <script>
         // Load attendance from backend
         function loadAttendance() {
-            fetch("http://localhost:5000/attendance")
+            fetch("http://localhost:5000/employees")
                 .then(res => res.json())
                 .then(data => {
                     const table = document.getElementById("attendanceTable");
@@ -136,10 +140,10 @@
                         else if (record.status.toLowerCase() === "overtime") statusClass = "overtime";
 
                         row.innerHTML = `
-                            <td>${record.employee_name}</td>
+                            <td>${record.name}</td>
                             <td>-</td>
                             <td>-</td>
-                            <td>${record.date}</td>
+                            <td>${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</td>
                             <td><span class="stat ${statusClass.toLowerCase()}">${record.status}</span></td>
                         `;
 
@@ -153,6 +157,16 @@
                     console.error("Failed to load attendance:", err);
                     document.getElementById("attendanceTable").innerHTML =
                         `<tr><td colspan="5">Failed to load data</td></tr>`;
+                });
+        }
+        function loadAttendanceStats() {
+            fetch("http://localhost:5000/attendance_stats")
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("presenceCount").innerText = data.presence;
+                    document.getElementById("absenceCount").innerText = data.absence;
+                    document.getElementById("overtimeCount").innerText = data.overtime;
+                    document.getElementById("lateCount").innerText = data.late;
                 });
         }
 
@@ -175,7 +189,10 @@
         }
 
         // Load attendance when page loads
-        document.addEventListener("DOMContentLoaded", loadAttendance);
+        document.addEventListener("DOMContentLoaded", () => {
+    loadAttendance();
+    loadAttendanceStats();
+});
     </script>
 </body>
 </html>
