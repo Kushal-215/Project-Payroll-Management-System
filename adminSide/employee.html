@@ -68,14 +68,17 @@
                 <div class="card card1">
                     <span class="material-icons">groups</span>
                     <p>Total Employee</p>
+                    <h2 id="totalCount">-</h2>
                 </div>
                 <div class="card card2">
                     <span class="material-icons">groups</span>
                     <p>Active Employees</p>
+                    <h2 id="activeCount">-</h2>
                 </div>
                 <div class="card card3">
                     <span class="material-icons">groups</span>
                     <p>Inactive Employees</p>
+                    <h2 id="inactiveCount">-</h2>
                 </div>
             </section>
 
@@ -83,7 +86,7 @@
             <section class="dashboard-sections">
                 <span class="section-left ">
                     <div class="section sec1">
-                        <span class="material-icons" onclick="openPopup()">add</span> 
+                        <span class="material-icons" onclick="openAddPopup()">add</span> 
                         <h2>Employee List</h2>
                         <p>Here are employees payroll information for the month</p>
                         <table class="empay">
@@ -144,6 +147,8 @@
     <form id="employeeForm">
         <input type="text" id="name" placeholder="Employee Name" required><br><br>
 
+        <input type="text" id="joining_date" placeholder="Joining Date" required><br><br>
+
         <input type="text" id="position" placeholder="Position" required><br><br>
 
         <input type="text" id="department" placeholder="Department" required><br><br>
@@ -180,10 +185,17 @@
 
         let selectedEmployeeId = null;
         let isEditMode = false;
+        let selectedJoiningDate = null;
 
 
 
     // Open/Close Popup
+     function openAddPopup() {
+        isEditMode = false;
+        document.getElementById("employeeForm").reset();
+        document.querySelector("#employeeForm button").innerText = "Add Employee";
+        document.getElementById("popup").style.display = "block";
+    }
     function openPopup() {
         document.getElementById("popup").style.display = "block";
     }
@@ -191,7 +203,15 @@
     function closePopup() {
         document.getElementById("popup").style.display = "none";
     }
-
+    function loadStats() {
+    fetch("http://localhost:5000/employee_stats")
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById("totalCount").innerText = data.total;
+            document.getElementById("activeCount").innerText = data.active;
+            document.getElementById("inactiveCount").innerText = data.inactive;
+        });
+}
     // Load all employees from backend and populate the table
     function loadEmployees() {
     fetch("http://localhost:5000/employees")
@@ -220,7 +240,9 @@
 
             });
         });
+        loadStats();
 }
+
 
    function showEmployeeDetails(emp) {
     selectedEmployeeId = emp.id;
@@ -230,6 +252,7 @@
     document.getElementById("detail-department").innerText = emp.department;
     document.getElementById("detail-status").innerText = emp.status;
     document.getElementById("detail-salary").innerText = emp.basic_salary;
+    selectedJoiningDate = emp.joining_date || "";
 }
 function confirmDelete() {
     fetch(`http://localhost:5000/delete_employee/${selectedEmployeeId}`, {
@@ -265,6 +288,8 @@ function openEditPopup() {
     document.getElementById("department").value = document.getElementById("detail-department").innerText;
     document.getElementById("basic_salary").value = document.getElementById("detail-salary").innerText;
     document.getElementById("status").value = document.getElementById("detail-status").innerText;
+    document.getElementById("joining_date").value = selectedJoiningDate;
+    
 
     document.querySelector("#employeeForm button").innerText = "Update Employee";
 
@@ -289,7 +314,10 @@ function closeConfirmPopup() {
 
 
     // Call loadEmployees on page load
-    document.addEventListener("DOMContentLoaded", loadEmployees);
+    document.addEventListener("DOMContentLoaded", () => {
+        loadEmployees();
+
+    });
 
     // Handle Add Employee form submission
     document.getElementById("employeeForm").addEventListener("submit", function(e) {
@@ -300,7 +328,8 @@ function closeConfirmPopup() {
             position: document.getElementById("position").value,
             department: document.getElementById("department").value,
             basic_salary: parseInt(document.getElementById("basic_salary").value),
-            status: document.getElementById("status").value
+            status: document.getElementById("status").value,
+            joining_date: document.getElementById("joining_date").value 
         };
 
         const url = isEditMode
