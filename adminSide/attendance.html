@@ -135,16 +135,16 @@
                         const row = document.createElement("tr");
 
                         // Assign class based on status (on-time, late, overtime)
-                        let statusClass = "on-time";
-                        if (record.status.toLowerCase() === "late") statusClass = "late";
-                        else if (record.status.toLowerCase() === "overtime") statusClass = "overtime";
+                        // let statusClass = "on-time";
+                        // if (record.status.toLowerCase() === "late") statusClass = "late";
+                        // else if (record.status.toLowerCase() === "overtime") statusClass = "overtime";
 
                         row.innerHTML = `
                             <td>${record.name}</td>
                             <td>-</td>
                             <td>-</td>
                             <td>${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</td>
-                            <td><span class="stat ${statusClass.toLowerCase()}">${record.status}</span></td>
+                            <td><span class="stat ${record.status.toLowerCase()}">${record.status}</span></td>
                         `;
 
                         // Click row to show details
@@ -172,7 +172,7 @@
 
         // Show selected employee details in sec2 panel
         function showEmployeeDetails(record) {
-            document.getElementById("detailName").innerText = record.employee_name;
+            document.getElementById("detailName").innerText = record.name;
             document.getElementById("detailPosition").innerText = record.position || "-";
             document.getElementById("detailDepartment").innerText = record.department || "-";
             document.getElementById("detailJoining").innerText = record.joining_date || "-";

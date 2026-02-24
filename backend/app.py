@@ -26,6 +26,7 @@ def init_db():
             department TEXT,
             joining_date TEXT,
             basic_salary REAL,
+            payroll_status TEXT DEFAULT 'Pending',
             status TEXT
         )
     """)
@@ -55,6 +56,68 @@ def get_db():
 @app.route("/")
 def home():
     return "Payroll Backend is running."
+
+# ── Payroll ────────────────────────────────────────────────
+
+# Get payroll data for all employees (with calculated net salary)
+@app.route("/payroll", methods=["GET"])
+def get_payroll():
+    with get_db() as conn:
+        cursor = conn.cursor()
+
+        # Get all employees
+        cursor.execute("SELECT * FROM employees")
+        employees = cursor.fetchall()
+
+        payroll_list = []
+        for emp in employees:
+            emp = dict(emp)
+
+            # Calculate overtime from attendance (count of 'Overtime' records)
+            cursor.execute("""
+                SELECT COUNT(*) FROM attendance
+                WHERE employee_id = ? AND status = 'Overtime'
+            """, (emp["id"],))
+            overtime_days = cursor.fetchone()[0]
+
+            # Calculate deductions from attendance (count of 'Absent' records)
+            cursor.execute("""
+                SELECT COUNT(*) FROM attendance
+                WHERE employee_id = ? AND status = 'Absent'
+            """, (emp["id"],))
+            absent_days = cursor.fetchone()[0]
+
+            # Simple calculation — adjust rates as needed
+            overtime_pay = overtime_days * 500   # Rs 500 per overtime day
+            deductions = absent_days * 500        # Rs 500 per absent day
+
+            net_salary = (emp["basic_salary"] or 0) + overtime_pay - deductions
+
+            payroll_list.append({
+                "id": emp["id"],
+                "name": emp["name"],
+                "position": emp["position"],
+                "department": emp["department"],
+                "basic_salary": emp["basic_salary"] or 0,
+                "overtime": overtime_pay,
+                "deductions": deductions,
+                "net_salary": net_salary,
+                "payroll_status": emp.get("payroll_status") or "Pending"
+            })
+
+    return jsonify(payroll_list)
+
+
+# Mark employee payroll as paid
+@app.route("/mark_paid/<int:emp_id>", methods=["PUT"])
+def mark_paid(emp_id):
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("""
+            UPDATE employees SET payroll_status = 'Paid' WHERE id = ?
+        """, (emp_id,))
+
+    return jsonify({"message": "Payroll marked as paid"})
 
 
 # ── Employees ──────────────────────────────────────────────
