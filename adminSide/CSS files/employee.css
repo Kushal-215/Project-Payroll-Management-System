@@ -25,12 +25,12 @@
 .sec1 table{
     width: 100%;
     border: none;
-    height: auto;
 
 }
 .sec2{
     background-color:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) ;
-    width: 94%;
+    height: calc(100vh - 335px);
+
 }
 .stat {
     padding: 10px 24px;
@@ -39,6 +39,9 @@
     font-weight: 600;
     width: 100px;
     display: inline-block;
+}
+.sec1{
+    height: 100%;
 }
 
 /* ACTIVE = GREEN */
@@ -60,7 +63,7 @@
     background-color: #D38888;
 }   
 .dashboard-sections {
-    grid-template-columns: 66.5% 33.5%;;
+    grid-template-columns: 10fr 3.5fr;
 }
 .section .employee-card {
     display: flex;

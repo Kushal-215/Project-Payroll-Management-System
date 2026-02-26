@@ -1,7 +1,22 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.main-content {
+    display: flex;
+    flex-direction: column;
+    height: 100vh; /* full viewport */
+}
+
 .sec1 p{
     font-weight: normal;
     font-size: 14px;
     height: 30px;
+}
+.sec1{
+    height: 100%;
 }
 .sec1 hr{
     margin-top: 10px;
@@ -9,11 +24,18 @@
     border: 0;
     border-top: 0.5px solid #CBCBCB;
 }
-
-
+.stats-cards {
+    flex: 0 0 auto; /* fixed height */
+}
+.employee-card .info{
+    margin: 10px 0;
+}
+.info p{
+    margin: 15px 15px 0 15px;
+}
 .sec2{
     background-color:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) ;
-    width: 50%;
+    height: calc(100vh - 335px);
 }
 .stat {
   padding: 10px 24px;
@@ -36,8 +58,10 @@
 .card4 .material-icons{ background-color: #DC7E19;} 
 
 .dashboard-sections {
-    grid-template-columns: 66.5% 33.5%;;
-    
+    display: grid;
+    grid-template-columns: 10fr 3.5fr;
+    gap: 20px;
+    width: 100%;
 }
 .section .employee-card {
     display: flex;
@@ -46,9 +70,7 @@
     width: 100%;
     justify-content: center;
 }
-.section sec2{
-    width: auto;
-}
+
 .attenTable{
     width: 100%;
     border-collapse: collapse;
