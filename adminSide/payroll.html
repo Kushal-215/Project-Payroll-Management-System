@@ -4,43 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payroll - Admin</title>
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="./CSS files/dashboard.css">
     <link rel="stylesheet" href="./CSS files/payroll.css">
-    <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <!-- Main Dashboard Container -->
     <div class="dashboard-container">
         
         <!-- Sidebar -->
         <aside class="sidebar">
-            <!-- Logo -->
             <div class="logo">ABC MARKETING</div>
-            <!-- Navigation Menu -->
             <nav class="menu">
-                <a href="./dashboard.html" class="menu-item ">
+                <a href="./dashboard.html" class="menu-item">
                     <span class="material-icons">home</span> Dashboard
                 </a>
-                <a href="./employee.html" class="menu-item ">
+                <a href="./employee.html" class="menu-item">
                     <span class="material-icons">people</span> Employees
                 </a>
-                <a  href="./attendance.html" class="menu-item">
+                <a href="./attendance.html" class="menu-item">
                     <span class="material-icons">check_box</span> Attendance
                 </a>
-                <a  href="./payroll.html" class="menu-item active">
+                <a href="./payroll.html" class="menu-item active">
                     <span class="material-icons">credit_card</span> Payroll
                 </a>
                 <a href="./payslip.html" class="menu-item">
                     <span class="material-icons">description</span> Payslip
                 </a>
-
                 <a href="./report.html" class="menu-item">
                     <span class="material-icons">bar_chart</span> Report Analytics
                 </a>
             </nav>
-            <!-- Sidebar Footer -->
             <div class="sidebar-footer">
                 <a href="#" class="menu-item">
                     <span class="material-icons">settings</span> Settings
@@ -48,20 +41,17 @@
             </div>
         </aside>
 
-        <!-- Main Content Area -->
+        <!-- Main Content -->
         <main class="main-content">
-            <!-- Header -->
             <header class="header">
                 <div class="welcome">
-                    <h1>Payroll-this month,Year</h1>
+                    <h1 id="payrollTitle">Payroll</h1>
                 </div>
-                
                 <div class="header-actions">
                     <input type="text" placeholder="search now" class="search">
                     <span class="material-icons">notifications</span>
                     <span class="material-icons account">account_circle</span>
                 </div>
-                
             </header>
 
             <!-- Stats Cards -->
@@ -69,91 +59,151 @@
                 <div class="card card1">
                     <span class="material-icons">groups</span>
                     <p>Total Employee</p>
+                    <h2 id="totalCount">-</h2>
                 </div>
                 <div class="card card3">
                     <span class="material-icons">groups</span>
                     <p>Active Employees</p>
+                    <h2 id="activeCount">-</h2>
                 </div>
                 <div class="card card2">
                     <span class="material-icons">groups</span>
                     <p>Inactive Employees</p>
+                    <h2 id="inactiveCount">-</h2>
                 </div>
             </section>
 
             <!-- Dashboard Sections -->
             <section class="dashboard-sections">
-                <span class="section-left ">
-                    <div class="section sec1"> 
+                <span class="section-left">
+                    <div class="section sec1">
                         <h2>Payroll Activities</h2>
                         <p>Here are employees payroll information for the month</p>
                         <table class="datapay">
-                        <thead>
-                            <tr class="hrpay">
-                                <th>Employee Name</th>
-                                <th>Position</th>
-                                <th>Department</th>
-                                <th>Net Salary</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody id="payrollTable">
-                            <!-- Data will come from backend -->
-                        </tbody>
-                    </table>
+                            <thead>
+                                <tr class="hrpay">
+                                    <th>Employee Name</th>
+                                    <th>Position</th>
+                                    <th>Department</th>
+                                    <th>Net Salary</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="payrollTable">
+                                <!-- Dynamic rows inserted here -->
+                            </tbody>
+                        </table>
                     </div>
-                    
                 </span>
-                    <div class="section sec2">
-                            <span class="employee-card head">
-                                <img src="" alt="*">
-                                <h3>Employee name </h3>
-                                <p>Position</p>
-                            </span>
-                            <span class="employee-card info">
-                                <p>Department</p>
-                                <p>Status</p>
-                                <p>Basic Salary</p>
-                                <p>Overtime & bonuses</p>
-                                <p>Deduction</p>
-                                <p>Net Salary</p>
-                                <option>Bank Details
-                                    <select name="" id="">view all</select>
-                                </option>
-                                <option>Payroll History
-                                    <select name="" id="">view all</select>
-                                </option>
-                            </span>
-                    </div>
+
+                <div class="section sec2">
+                    <span class="employee-card head">
+                        <img src="" alt="*">
+                        <h3 id="detail-name">Select an employee</h3>
+                        <p id="detail-position">—</p>
+                    </span>
+                    <span class="employee-card info">
+                        <p><strong>Department:</strong> <span id="detail-department">—</span></p>
+                        <p><strong>Basic Salary:</strong> Rs <span id="detail-basic">—</span></p>
+                        <p><strong>Overtime & Bonuses:</strong> Rs <span id="detail-overtime">—</span></p>
+                        <p><strong>Deductions:</strong> Rs <span id="detail-deductions">—</span></p>
+                        <p><strong>Net Salary:</strong> Rs <span id="detail-net">—</span></p>
+                        <p><strong>Status:</strong> <span id="detail-status">—</span></p>
+                        <button id="markPaidBtn" onclick="markAsPaid()" style="margin-top:10px; display:none;">
+                            Mark as Paid
+                        </button>
+                    </span>
+                </div>
             </section>
         </main>
-
     </div>
+
     <script>
-    function loadPayroll() {
-        fetch("http://localhost:5000/employees")
-            .then(res => res.json())
-            .then(data => {
-                const table = document.getElementById("payrollTable");
-                table.innerHTML = "";
+        let selectedEmployeeId = null;
+        let payrollData = [];
 
-                data.forEach(emp => {
-                    const row = document.createElement("tr");
+        // Set payroll title to current month and year
+        const now = new Date();
+        const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' });
+        document.getElementById("payrollTitle").innerText = `Payroll - ${monthYear}`;
 
-                    row.innerHTML = `
-                        <td>${emp.name}</td>
-                        <td>${emp.position}</td>
-                        <td>IT</td>
-                        <td>Pending</td>
-                        <td><span class="stat pending">Pending</span></td>
-                    `;
-
-                    table.appendChild(row);
+        // Load stat cards
+        function loadStats() {
+            fetch("http://localhost:5000/employee_stats")
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("totalCount").innerText = data.total;
+                    document.getElementById("activeCount").innerText = data.active;
+                    document.getElementById("inactiveCount").innerText = data.inactive;
                 });
-            });
-    }
+        }
 
-    // Load payroll automatically
-    loadPayroll();
+        // Load payroll table
+        function loadPayroll() {
+            fetch("http://localhost:5000/payroll")
+                .then(res => res.json())
+                .then(data => {
+                    payrollData = data;
+                    const table = document.getElementById("payrollTable");
+                    table.innerHTML = "";
+
+                    data.forEach(emp => {
+                        const row = document.createElement("tr");
+                        const statusClass = emp.payroll_status === "Paid" ? "active" : "pending";
+
+                        row.innerHTML = `
+                            <td>${emp.name}</td>
+                            <td>${emp.position}</td>
+                            <td>${emp.department}</td>
+                            <td>Rs ${emp.net_salary}</td>
+                            <td><span class="stat ${statusClass}">${emp.payroll_status}</span></td>
+                        `;
+
+                        row.onclick = () => showDetails(emp);
+                        table.appendChild(row);
+                    });
+                });
+        }
+
+        // Show employee details in sec2
+        function showDetails(emp) {
+            selectedEmployeeId = emp.id;
+
+            document.getElementById("detail-name").innerText = emp.name;
+            document.getElementById("detail-position").innerText = emp.position;
+            document.getElementById("detail-department").innerText = emp.department;
+            document.getElementById("detail-basic").innerText = emp.basic_salary;
+            document.getElementById("detail-overtime").innerText = emp.overtime || 0;
+            document.getElementById("detail-deductions").innerText = emp.deductions || 0;
+            document.getElementById("detail-net").innerText = emp.net_salary;
+            document.getElementById("detail-status").innerText = emp.payroll_status;
+
+            // Show mark as paid button only if pending
+            const btn = document.getElementById("markPaidBtn");
+            btn.style.display = emp.payroll_status === "Pending" ? "block" : "none";
+        }
+
+        // Mark selected employee as paid
+        function markAsPaid() {
+            if (!selectedEmployeeId) return;
+
+            fetch(`http://localhost:5000/mark_paid/${selectedEmployeeId}`, {
+                method: "PUT"
+            })
+            .then(res => res.json())
+            .then(result => {
+                alert(result.message);
+                loadPayroll();
+                document.getElementById("detail-status").innerText = "Paid";
+                document.getElementById("markPaidBtn").style.display = "none";
+            })
+            .catch(err => console.error(err));
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            loadStats();
+            loadPayroll();
+        });
     </script>
 </body>
 </html>

@@ -23,6 +23,10 @@
     border-radius: 50%;   
     margin: 10px;
 }
+.active {
+    background: #6ef0a1;
+    color: #0b6b3a;
+}
 .sec1 table{
     width: 100%;
     border: none;

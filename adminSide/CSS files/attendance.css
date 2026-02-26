@@ -17,7 +17,7 @@
 }
 .stat {
   padding: 10px 24px;
-  border-radius: 999px;
+  border-radius: 10px;
   font-size: 14px;
   font-weight: 600;
   display: inline-block;
@@ -25,20 +25,6 @@
   text-align: center;
 }
 
-.on-time {
-  background: #6ef0a1;
-  color: #0b6b3a;
-}
-
-.late {
-  background: #e6e36d;
-  color: #6a6400;
-}
-
-.overtime {
-  background: #9ee3f2;
-  color: #005f73;
-}
 
 .card1{ background-color: #AAE9D8;}
 .card2{ background-color: #9EDAEA;}
@@ -88,7 +74,7 @@
 .dashboard-sections .material-icons{
     margin-left: 10px;
     margin-top: 10px;
-
+    
 }
 .sec1 .material-icons{
     float: right;
@@ -102,6 +88,14 @@
     align-items: center;
     border-radius: 50%;   
     margin: 10px;
+}
+.active {
+  background: #6ef0a1;
+  color: #0b6b3a;
+}
+.inactive {
+    background: #d45656;
+    color: #640f0f;
 }
 .stat.present {
     background: #d4edda;
