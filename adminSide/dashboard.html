@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Admin</title>
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="./CSS files/dashboard.css">
-    <!-- Google Material Icons for icons -->
+    <link rel="stylesheet" href="./CSS files/employee.css">
+    <link rel="stylesheet" href="./CSS files/header.css">
+    <script src="./JS File/header.js" defer></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <!-- Main Dashboard Container -->
     <div class="dashboard-container">
+
         <!-- Sidebar -->
         <aside class="sidebar">
-            <!-- Logo -->
             <div class="logo">ABC MARKETING</div>
-            <!-- Navigation Menu -->
             <nav class="menu">
                 <a href="./dashboard.html" class="menu-item active">
                     <span class="material-icons">home</span> Dashboard
@@ -24,10 +23,10 @@
                 <a href="./employee.html" class="menu-item">
                     <span class="material-icons">people</span> Employees
                 </a>
-                <a  href="./attendance.html" class="menu-item">
+                <a href="./attendance.html" class="menu-item">
                     <span class="material-icons">check_box</span> Attendance
                 </a>
-                <a  href="./payroll.html" class="menu-item">
+                <a href="./payroll.html" class="menu-item">
                     <span class="material-icons">credit_card</span> Payroll
                 </a>
                 <a href="./payslip.html" class="menu-item">
@@ -37,7 +36,6 @@
                     <span class="material-icons">bar_chart</span> Report Analytics
                 </a>
             </nav>
-            <!-- Sidebar Footer -->
             <div class="sidebar-footer">
                 <a href="#" class="menu-item">
                     <span class="material-icons">settings</span> Settings
@@ -45,57 +43,313 @@
             </div>
         </aside>
 
-        <!-- Main Content Area -->
+        <!-- Main Content -->
         <main class="main-content">
-            <!-- Header -->
             <header class="header">
                 <div class="welcome">
-                    Welcome Back, user_name
+                    Welcome Back, Admin
                     <h1>Dashboard Overview</h1>
                 </div>
+
                 <div class="header-actions">
-                    <input type="text" placeholder="search now" class="search" material-icons="search">
-                    <span class="material-icons">notifications</span>
-                    <span class="material-icons account">account_circle</span>
+
+                    <div class="notif-wrapper">
+                        <span class="material-icons" id="notifBtn" onclick="toggleNotifications()">notifications</span>
+                        <span class="notif-badge" id="notifBadge">0</span>
+
+                        <!-- Notification Dropdown -->
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <h4>Leave Requests</h4>
+                            <div class="notif-list" id="notifList">
+                                <p class="notif-empty">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Icon -->
+                    <div class="profile-wrapper">
+                        <span class="material-icons account" id="profileBtn" onclick="toggleProfile()">account_circle</span>
+
+                        <!-- Profile Dropdown -->
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <a onclick="openEditProfile()">
+                                <span class="material-icons">edit</span> Edit Profile
+                            </a>
+                            <a onclick="logout()">
+                                <span class="material-icons">logout</span> Log Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Profile Popup (add before closing body tag on EVERY page) -->
+                <div id="editProfilePopup" class="edit-profile-popup">
+                    <div class="pop-content">
+                        <span class="close" onclick="closeEditProfile()">&times;</span>
+                        <h3>Edit Profile</h3>
+                        <input type="text" id="editAdminName" placeholder="Admin Name">
+                        <input type="password" id="editAdminPassword" placeholder="New Password (leave blank to keep)">
+                        <br>
+                        <button onclick="saveProfile()">Save</button>
+                        <button class="cancel-btn" onclick="closeEditProfile()">Cancel</button>
+                    </div>
                 </div>
             </header>
 
             <!-- Stats Cards -->
             <section class="stats-cards">
                 <div class="card card1">
-                    <span class="material-icons">groups</span>
-                    <p>Total Employee</p>
+                    <div class="card-top">
+                        <span class="material-icons">groups</span>
+                        <p>Total Employees</p>
+                    </div>
+                    <h2 id="totalEmployees">-</h2>
                 </div>
                 <div class="card card2">
-                    <span class="material-icons">credit_card</span>
-                    <p>Payroll Processed</p>
+                    <div class="card-top">
+                        <span class="material-icons">credit_card</span>
+                        <p>Payroll Processed</p>
+                    </div>
+                    <h2 id="payrollProcessed">-</h2>
                 </div>
                 <div class="card card3">
-                    <span class="material-icons">payment</span>
-                    <p>Pending Pay</p>
+                    <div class="card-top">
+                        <span class="material-icons">payment</span>
+                        <p>Pending Pay</p>
+                    </div>
+                    <h2 id="pendingPay">-</h2>
                 </div>
                 <div class="card card4">
-                    <span class="material-icons">attach_money</span>
-                    <p>Tax & Deduction</p>
+                    <div class="card-top">
+                        <span class="material-icons">attach_money</span>
+                        <p>Total Deductions</p>
+                    </div>
+                    <h2 id="totalDeductions">-</h2>
                 </div>
             </section>
 
             <!-- Dashboard Sections -->
             <section class="dashboard-sections">
-                
+
+                <!-- Announcements -->
                 <div class="section An">
-                    <h2>Announcements</h2>
+                    <div class="section-header">
+                        <h2>Announcements</h2>
+                        <span class="material-icons add-btn" onclick="openAnnouncementPopup()">add</span>
+                    </div>
+                    <div id="announcementList"></div>
                 </div>
-                
+
+                <!-- Today's Attendance -->
                 <div class="section At">
-                    <h2>Attendance</h2> 
+                    <h2>Today's Attendance</h2>
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="todayAttendance">
+                            <tr><td colspan="2">No attendance records for today</td></tr>
+                        </tbody>
+                    </table>
                 </div>
+
+                <!-- Recent Payroll -->
                 <div class="section Ph">
-                    <h2>Payroll History</h2>
+                    <h2>Recent Payroll</h2>
+                    <table class="dash-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Net Salary</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recentPayroll">
+                            <tr><td colspan="3">Loading...</td></tr>
+                        </tbody>
+                    </table>
                 </div>
+
             </section>
         </main>
-
     </div>
+
+    <!-- Announcement Popup -->
+    <div id="announcementPopup" class="pop">
+        <div class="pop-content">
+            <span class="close" onclick="closeAnnouncementPopup()">&times;</span>
+            <h3 id="announcementPopupTitle">Post Announcement</h3>
+            <textarea id="announcementInput" placeholder="Type an announcement..."></textarea>
+            <button id="announcementSubmitBtn" onclick="submitAnnouncement()">Post</button>
+        </div>
+    </div>
+
+    <script>
+        let editingAnnouncementId = null;
+
+        // ── Stat Cards ──────────────────────────────────────────
+        function loadStats() {
+            fetch("http://localhost:5000/employee_stats")
+                .then(res => res.json())
+                .then(data => {
+                    document.getElementById("totalEmployees").innerText = data.total;
+                });
+
+            fetch("http://localhost:5000/payroll")
+                .then(res => res.json())
+                .then(data => {
+                    const processed = data.filter(e => e.payroll_status === "Paid").length;
+                    const pending = data.filter(e => e.payroll_status === "Pending").length;
+                    const totalDeductions = data.reduce((sum, e) => sum + (e.deductions || 0), 0);
+
+                    document.getElementById("payrollProcessed").innerText = processed;
+                    document.getElementById("pendingPay").innerText = pending;
+                    document.getElementById("totalDeductions").innerText = `Rs ${totalDeductions}`;
+                });
+        }
+
+        // ── Today's Attendance ──────────────────────────────────
+        function loadTodayAttendance() {
+            fetch("http://localhost:5000/attendance")
+                .then(res => res.json())
+                .then(data => {
+                    const today = new Date().toISOString().split("T")[0];
+                    const todayRecords = data.filter(r => r.date === today);
+                    const tbody = document.getElementById("todayAttendance");
+
+                    if (todayRecords.length === 0) {
+                        tbody.innerHTML = `<tr><td colspan="2">No attendance records for today</td></tr>`;
+                        return;
+                    }
+
+                    tbody.innerHTML = "";
+                    todayRecords.forEach(r => {
+                        const statusClass = r.status.toLowerCase().replace(" ", "-");
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${r.employee_name}</td>
+                                <td><span class="stat ${statusClass}">${r.status}</span></td>
+                            </tr>
+                        `;
+                    });
+                });
+        }
+
+        // ── Recent Payroll ──────────────────────────────────────
+        function loadRecentPayroll() {
+            fetch("http://localhost:5000/payroll")
+                .then(res => res.json())
+                .then(data => {
+                    const tbody = document.getElementById("recentPayroll");
+                    tbody.innerHTML = "";
+
+                    data.slice(0, 5).forEach(emp => {
+                        const statusClass = emp.payroll_status === "Paid" ? "active" : "pending";
+                        tbody.innerHTML += `
+                            <tr>
+                                <td>${emp.name}</td>
+                                <td>Rs ${emp.net_salary}</td>
+                                <td><span class="stat ${statusClass}">${emp.payroll_status}</span></td>
+                            </tr>
+                        `;
+                    });
+                });
+        }
+
+        // ── Announcements ───────────────────────────────────────
+        function openAnnouncementPopup() {
+            editingAnnouncementId = null;
+            document.getElementById("announcementInput").value = "";
+            document.getElementById("announcementSubmitBtn").innerText = "Post";
+            document.getElementById("announcementPopupTitle").innerText = "Post Announcement";
+            document.getElementById("announcementPopup").classList.add("active");
+        }
+
+        function closeAnnouncementPopup() {
+            document.getElementById("announcementPopup").classList.remove("active");
+            document.getElementById("announcementInput").value = "";
+            editingAnnouncementId = null;
+        }
+
+
+        function loadAnnouncements() {
+            fetch("http://localhost:5000/announcements")
+                .then(res => res.json())
+                .then(data => renderAnnouncements(data))
+                .catch(() => {
+                    document.getElementById("announcementList").innerHTML =
+                        `<p>No announcements yet.</p>`;
+                });
+        }
+
+        function renderAnnouncements(announcements) {
+            const list = document.getElementById("announcementList");
+            if (announcements.length === 0) {
+                list.innerHTML = `<p>No announcements yet.</p>`;
+                return;
+            }
+            list.innerHTML = announcements.map(a => `
+                <div class="announcement-item">
+                    <p>${a.text}</p>
+                    <small>${a.created_at}</small>
+                    <div class="announcement-actions">
+                        <button onclick="startEditAnnouncement(${a.id}, '${a.text.replace(/'/g, "\\'")}')">Edit</button>
+                        <button onclick="deleteAnnouncement(${a.id})">Delete</button>
+                    </div>
+                </div>
+            `).join("");
+        }
+
+        function submitAnnouncement() {
+            const input = document.getElementById("announcementInput");
+            const text = input.value.trim();
+            if (!text) return;
+
+            if (editingAnnouncementId) {
+                fetch(`http://localhost:5000/announcements/${editingAnnouncementId}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text })
+                })
+                .then(res => res.json())
+                .then(() => { closeAnnouncementPopup(); loadAnnouncements(); });
+            } else {
+                const now = new Date().toLocaleString();
+                fetch("http://localhost:5000/announcements", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ text, created_at: now })
+                })
+                .then(res => res.json())
+                .then(() => { closeAnnouncementPopup(); loadAnnouncements(); });
+            }
+        }
+
+        function startEditAnnouncement(id, text) {
+            editingAnnouncementId = id;
+            document.getElementById("announcementInput").value = text;
+            document.getElementById("announcementSubmitBtn").innerText = "Update";
+            document.getElementById("announcementPopupTitle").innerText = "Edit Announcement";
+            document.getElementById("announcementPopup").style.display = "flex";
+            document.getElementById("announcementPopup").classList.add("active");
+        }
+
+        function deleteAnnouncement(id) {
+            fetch(`http://localhost:5000/announcements/${id}`, { method: "DELETE" })
+                .then(res => res.json())
+                .then(() => loadAnnouncements());
+        }
+
+        // ── Init ────────────────────────────────────────────────
+        document.addEventListener("DOMContentLoaded", () => {
+            loadStats();
+            loadTodayAttendance();
+            loadRecentPayroll();
+            loadAnnouncements();
+        });
+    </script>
 </body>
 </html>

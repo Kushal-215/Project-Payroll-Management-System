@@ -3,115 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - User</title>
-    <!-- Link to external CSS -->
+    <title>Payslip - User</title>
     <link rel="stylesheet" href="./userCSS/userDashboard.css">
     <link rel="stylesheet" href="./userCSS/userPayslip.css">
-    <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <!-- Main Dashboard Container -->
     <div class="dashboard-container">
-        
-        <!-- Sidebar -->
         <aside class="sidebar">
-            <!-- Logo -->
             <div class="logo">ABC MARKETING</div>
-            <!-- Navigation Menu -->
             <nav class="menu">
-                <a href="./userDashboard.html" class="menu-item ">
-                    <span class="material-icons">home</span> Dashboard
-                </a>
-                <a href="./userAttendence.html" class="menu-item">
-                    <span class="material-icons">check_box</span> Attendence
-                </a>
-                <a href="#" class="menu-item">
-                    <span class="material-icons">notifications</span> Announcements
-                </a>
-                <a href="./userWorkUpdates.html" class="menu-item">
-                    <span class="material-icons">mail</span> Work Updates
-                </a>
-                <a href="./userLeave.html" class="menu-item ">
-                    <span class="material-icons">event_busy</span> Leave Management
-                </a>
-                <a href="./userPaysilp.html" class="menu-item active">
-                    <span class="material-icons">description</span> Payslip
-                </a>
+                <a href="./userDashboard.html" class="menu-item"><span class="material-icons">home</span> Dashboard</a>
+                <a href="./userAttendence.html" class="menu-item"><span class="material-icons">check_box</span> Attendance</a>
+                <a href="./userAnnouncements.html" class="menu-item"><span class="material-icons">notifications</span> Announcements</a>
+                <a href="./userWorkUpdates.html" class="menu-item"><span class="material-icons">mail</span> Work Updates</a>
+                <a href="./userLeave.html" class="menu-item"><span class="material-icons">event_busy</span> Leave Management</a>
+                <a href="./userPaysilp.html" class="menu-item active"><span class="material-icons">description</span> Payslip</a>
             </nav>
-            <!-- Sidebar Footer -->
             <div class="sidebar-footer">
-                <a href="#" class="menu-item">
-                    <span class="material-icons">settings</span> Settings
-                </a>
+                <a href="#" class="menu-item" onclick="logout()"><span class="material-icons">logout</span> Logout</a>
             </div>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Header -->
             <header class="header">
                 <div class="welcome">
-                    Welcome, user_name
-                    <h1>Payslip Overview</h1>
+                    Welcome, <span id="username">Loading...</span>
+                    <h1>Payslip</h1>
                 </div>
                 <div class="header-actions">
-                    <input type="text" placeholder="search now" class="search">
-                    <span class="material-icons">notifications</span>
                     <span class="material-icons account">account_circle</span>
                 </div>
             </header>
 
-            <!-- Stats Cards -->
             <section class="dashboard-sections">
                 <div class="section payslip">
                     <div class="payHead">
-                    <h1>Payslip</h1>
-                    <button>Download pdf</button>
+                        <h1>Payslip — <span id="payMonth"></span></h1>
+                        <button onclick="printPayslip()">Download / Print</button>
                     </div>
 
                     <div class="info">
-                    <div>
-                        <p><strong>Employee name:</strong></p>
-                        <p><strong>Employee ID:</strong></p>
-                        <p><strong>Position:</strong></p>
-                    </div>
-
-                    <div>
-                        <p><strong>Company name:</strong></p>
-                        <p><strong>Company Address:</strong></p>
-                        <p><strong>Payslip for:</strong></p>
-                    </div>
+                        <div>
+                            <p><strong>Employee Name:</strong> <span id="empName">-</span></p>
+                            <p><strong>Position:</strong> <span id="empPosition">-</span></p>
+                            <p><strong>Department:</strong> <span id="empDepartment">-</span></p>
+                        </div>
+                        <div>
+                            <p><strong>Company:</strong> ABC Marketing</p>
+                            <p><strong>Joining Date:</strong> <span id="empJoining">-</span></p>
+                            <p><strong>Status:</strong> <span id="payStatus">-</span></p>
+                        </div>
                     </div>
 
                     <hr class="lined">
 
                     <div class="section">
-                    <h3>Earnings</h3>
-                    <p>Basic Salary:</p>
-
-                    <h4>Allowances</h4>
-                    <p class="indent">Transport:</p>
-                    <p class="indent">Food:</p>
+                        <h3>Earnings</h3>
+                        <p>Basic Salary: Rs <span id="basicSalary">0</span></p>
+                        <p>Overtime & Bonuses: Rs <span id="overtime">0</span></p>
                     </div>
 
                     <hr>
 
                     <div class="section">
-                    <h3>Deductions</h3>
-                    <p>Tax:</p>
-                    <p>Insurance:</p>
+                        <h3>Deductions</h3>
+                        <p>Absent Deductions: Rs <span id="deductions">0</span></p>
                     </div>
-                     <hr>
+
+                    <hr>
 
                     <div class="section">
-                    <h3>Net Salary</h3>
+                        <h3>Net Salary: Rs <span id="netSalary">0</span></h3>
                     </div>
-
                 </div>
-                
             </section>
         </main>
     </div>
+
+    <!-- Print area -->
+    <div id="printArea" style="display:none;">
+        <div style="font-family:Arial,sans-serif; padding:40px; max-width:600px; margin:auto; border:1px solid #ccc;">
+            <h2 style="text-align:center;">ABC MARKETING</h2>
+            <h3 style="text-align:center;">Payslip — <span id="print-month"></span></h3>
+            <hr>
+            <table style="width:100%; margin-top:20px;">
+                <tr><td><strong>Name:</strong></td><td id="print-name"></td></tr>
+                <tr><td><strong>Position:</strong></td><td id="print-position"></td></tr>
+                <tr><td><strong>Department:</strong></td><td id="print-department"></td></tr>
+                <tr><td><strong>Joining Date:</strong></td><td id="print-joining"></td></tr>
+            </table>
+            <hr style="margin-top:20px;">
+            <table style="width:100%; margin-top:20px;">
+                <tr><td><strong>Basic Salary:</strong></td><td>Rs <span id="print-basic"></span></td></tr>
+                <tr><td><strong>Overtime & Bonuses:</strong></td><td>Rs <span id="print-overtime"></span></td></tr>
+                <tr><td><strong>Deductions:</strong></td><td>Rs <span id="print-deductions"></span></td></tr>
+                <tr style="font-size:18px; font-weight:bold;"><td>Net Salary:</td><td>Rs <span id="print-net"></span></td></tr>
+            </table>
+            <hr style="margin-top:20px;">
+            <p style="text-align:center; font-size:12px; color:gray;">System-generated payslip.</p>
+        </div>
+    </div>
+
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #printArea, #printArea * { visibility: visible; }
+            #printArea { display: block !important; position: absolute; left: 0; top: 0; }
+        }
+    </style>
+
+    <script>
+        const API = "http://localhost:5000";
+        const empId = localStorage.getItem("empId") || 1;
+        const now = new Date();
+        const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' });
+        document.getElementById("payMonth").textContent = monthYear;
+        document.getElementById("print-month").textContent = monthYear;
+
+        async function loadPayslip() {
+            const res = await fetch(`${API}/user/${empId}/payroll`);
+            const data = await res.json();
+
+            document.getElementById("username").textContent = data.name;
+            document.getElementById("empName").textContent = data.name;
+            document.getElementById("empPosition").textContent = data.position;
+            document.getElementById("empDepartment").textContent = data.department;
+            document.getElementById("empJoining").textContent = data.joining_date || "-";
+            document.getElementById("payStatus").textContent = data.payroll_status;
+            document.getElementById("basicSalary").textContent = data.basic_salary;
+            document.getElementById("overtime").textContent = data.overtime;
+            document.getElementById("deductions").textContent = data.deductions;
+            document.getElementById("netSalary").textContent = data.net_salary;
+        }
+
+        function printPayslip() {
+            document.getElementById("print-name").textContent = document.getElementById("empName").textContent;
+            document.getElementById("print-position").textContent = document.getElementById("empPosition").textContent;
+            document.getElementById("print-department").textContent = document.getElementById("empDepartment").textContent;
+            document.getElementById("print-joining").textContent = document.getElementById("empJoining").textContent;
+            document.getElementById("print-basic").textContent = document.getElementById("basicSalary").textContent;
+            document.getElementById("print-overtime").textContent = document.getElementById("overtime").textContent;
+            document.getElementById("print-deductions").textContent = document.getElementById("deductions").textContent;
+            document.getElementById("print-net").textContent = document.getElementById("netSalary").textContent;
+            document.getElementById("printArea").style.display = "block";
+            window.print();
+            document.getElementById("printArea").style.display = "none";
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "../public/login.html";
+        }
+
+        loadPayslip();
+    </script>
 </body>
 </html>

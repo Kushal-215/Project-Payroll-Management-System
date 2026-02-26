@@ -4,32 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payslip - Admin</title>
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="./CSS files/dashboard.css">
     <link rel="stylesheet" href="./CSS files/payslip.css">
-    <!-- Google Material Icons for icons -->
+    <link rel="stylesheet" href="./CSS files/header.css">
+    <script src="./JS File/header.js" defer></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <!-- Main Dashboard Container -->
     <div class="dashboard-container">
-        
+
         <!-- Sidebar -->
         <aside class="sidebar">
-            <!-- Logo -->
             <div class="logo">ABC MARKETING</div>
-            <!-- Navigation Menu -->
             <nav class="menu">
-                <a href="./dashboard.html" class="menu-item ">
+                <a href="./dashboard.html" class="menu-item">
                     <span class="material-icons">home</span> Dashboard
                 </a>
-                <a href="./employee.html" class="menu-item ">
+                <a href="./employee.html" class="menu-item">
                     <span class="material-icons">people</span> Employees
                 </a>
-                <a  href="./attendance.html" class="menu-item">
+                <a href="./attendance.html" class="menu-item">
                     <span class="material-icons">check_box</span> Attendance
                 </a>
-                <a  href="./payroll.html" class="menu-item">
+                <a href="./payroll.html" class="menu-item">
                     <span class="material-icons">credit_card</span> Payroll
                 </a>
                 <a href="./payslip.html" class="menu-item active">
@@ -39,7 +36,6 @@
                     <span class="material-icons">bar_chart</span> Report Analytics
                 </a>
             </nav>
-            <!-- Sidebar Footer -->
             <div class="sidebar-footer">
                 <a href="#" class="menu-item">
                     <span class="material-icons">settings</span> Settings
@@ -47,98 +43,256 @@
             </div>
         </aside>
 
-        <!-- Main Content Area -->
+        <!-- Main Content -->
         <main class="main-content">
-            <!-- Header -->
             <header class="header">
                 <div class="welcome">
                     <h1>Payslip</h1>
                 </div>
-                
                 <div class="header-actions">
-                    <input type="text" placeholder="search now" class="search">
-                    <span class="material-icons">notifications</span>
-                    <span class="material-icons account">account_circle</span>
+                    <div class="header-actions">
+
+                    <div class="notif-wrapper">
+                        <span class="material-icons" id="notifBtn" onclick="toggleNotifications()">notifications</span>
+                        <span class="notif-badge" id="notifBadge">0</span>
+
+                        <!-- Notification Dropdown -->
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <h4>Leave Requests</h4>
+                            <div class="notif-list" id="notifList">
+                                <p class="notif-empty">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Icon -->
+                    <div class="profile-wrapper">
+                        <span class="material-icons account" id="profileBtn" onclick="toggleProfile()">account_circle</span>
+
+                        <!-- Profile Dropdown -->
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <a onclick="openEditProfile()">
+                                <span class="material-icons">edit</span> Edit Profile
+                            </a>
+                            <a onclick="logout()">
+                                <span class="material-icons">logout</span> Log Out
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                
+
+                <!-- Edit Profile Popup (add before closing body tag on EVERY page) -->
+                <div id="editProfilePopup" class="edit-profile-popup">
+                    <div class="pop-content">
+                        <span class="close" onclick="closeEditProfile()">&times;</span>
+                        <h3>Edit Profile</h3>
+                        <input type="text" id="editAdminName" placeholder="Admin Name">
+                        <input type="password" id="editAdminPassword" placeholder="New Password (leave blank to keep)">
+                        <br>
+                        <button onclick="saveProfile()">Save</button>
+                        <button class="cancel-btn" onclick="closeEditProfile()">Cancel</button>
+                    </div>
+                </div>
+                </div>
             </header>
 
             <!-- Stats Cards -->
             <section class="stats-cards">
                 <div class="card card1">
-                    <span class="material-icons">groups</span>
-                    <p>Total Payslip</p>
+                    <div class="card-top">
+                        <span class="material-icons">description</span>
+                        <p>Total Payslips</p>
+                    </div>
+                    <h2 id="totalPayslips">-</h2>
                 </div>
                 <div class="card card2">
-                    <span class="material-icons">groups</span>
-                    <p>Overtime & Bonuses</p>
+                    <div class="card-top">
+                        <span class="material-icons">trending_up</span>
+                        <p>Total Overtime & Bonuses</p>
+                    </div>
+                    <h2 id="totalOvertime">-</h2>
                 </div>
                 <div class="card card3">
-                    <span class="material-icons">groups</span>
-                    <p>Deduction</p>
+                    <div class="card-top">
+                        <span class="material-icons">trending_down</span>
+                        <p>Total Deductions</p>
+                    </div>
+                    <h2 id="totalDeductions">-</h2>
                 </div>
             </section>
 
             <!-- Dashboard Sections -->
             <section class="dashboard-sections">
-                <span class="section-left ">
+                <span class="section-left">
                     <div class="section sec1">
-                        <span class="material-icons">add</span> 
                         <h2>Payslip List</h2>
-                        <p>Here are employees payslip information </p>
+                        <p>Here are employees payslip information</p>
                         <table class="empay">
-                            <tr class="dapay">
-                            <th>Employee Name</th>
-                            <th>Monthly Salary</th>
-                            <th>Deduction</th>
-                            <th>Bonuses</th>
-                            <th>Net Salary</th>
-                            <th>Payslip Status</th>
-                            </tr>
-                            <tr>
-                            <td>John Doe</td>
-                            <td>Software Engineer</td>
-                            <td>IT</td>
-                            <td></td>
-                            <td ></td>
-                            <td >
-                                <span class="stat paid">Paid </span>
-                            </td>
-                            </tr>
-                            <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td ></td>
-                            <td >
-                                <span class="stat pending">Pending</span>
-                            </td>
-                            </tr>
+                            <thead>
+                                <tr class="dapay">
+                                    <th>Employee Name</th>
+                                    <th>Basic Salary</th>
+                                    <th>Deduction</th>
+                                    <th>Bonuses</th>
+                                    <th>Net Salary</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="payslipTable">
+                                <!-- Dynamic rows inserted here -->
+                            </tbody>
                         </table>
                     </div>
                 </span>
-                    <div class="section sec2">
-                            <span class="employee-card head">
-                                <img src="" alt="*">
-                                <h3>Employee name </h3>
-                                <p>Position</p>
-                            </span>
-                            <span class="employee-card info">
-                                <p>Department</p>
-                                <p>Joining Dates</p>
-                                <p>Salary</p>
-                                <option>Attendance History
-                                    <select name="" id="">view all</select>
-                                </option>
-                                <option>Payroll History
-                                    <select name="" id="">view all</select>
-                                </option>
-                            </span>
-                    </div>
+
+                <div class="section sec2">
+                    <span class="employee-card head">
+                        <img src="" alt="*">
+                        <h3 id="detail-name">Select an employee</h3>
+                        <p id="detail-position">—</p>
+                    </span>
+                    <span class="employee-card info">
+                        <p><strong>Department:</strong> <span id="detail-department">—</span></p>
+                        <p><strong>Joining Date:</strong> <span id="detail-joining">—</span></p>
+                        <p><strong>Basic Salary:</strong> Rs <span id="detail-basic">—</span></p>
+                        <p><strong>Overtime & Bonuses:</strong> Rs <span id="detail-overtime">—</span></p>
+                        <p><strong>Deductions:</strong> Rs <span id="detail-deductions">—</span></p>
+                        <p><strong>Net Salary:</strong> Rs <span id="detail-net">—</span></p>
+                        <p><strong>Status:</strong> <span id="detail-status">—</span></p>
+                        <button id="printBtn" onclick="printPayslip()" style="margin-top:10px; display:none;">
+                            Download / Print Payslip
+                        </button>
+                    </span>
+                </div>
             </section>
         </main>
-
     </div>
+
+    <!-- Hidden printable payslip template -->
+    <div id="printArea" style="display:none;">
+        <div style="font-family: Arial, sans-serif; padding: 40px; max-width: 600px; margin: auto; border: 1px solid #ccc;">
+            <h2 style="text-align:center;">ABC MARKETING</h2>
+            <h3 style="text-align:center;">Payslip - <span id="print-month"></span></h3>
+            <hr>
+            <table style="width:100%; margin-top:20px;">
+                <tr><td><strong>Employee Name:</strong></td><td id="print-name"></td></tr>
+                <tr><td><strong>Position:</strong></td><td id="print-position"></td></tr>
+                <tr><td><strong>Department:</strong></td><td id="print-department"></td></tr>
+                <tr><td><strong>Joining Date:</strong></td><td id="print-joining"></td></tr>
+            </table>
+            <hr style="margin-top:20px;">
+            <table style="width:100%; margin-top:20px;">
+                <tr><td><strong>Basic Salary:</strong></td><td>Rs <span id="print-basic"></span></td></tr>
+                <tr><td><strong>Overtime & Bonuses:</strong></td><td>Rs <span id="print-overtime"></span></td></tr>
+                <tr><td><strong>Deductions:</strong></td><td>Rs <span id="print-deductions"></span></td></tr>
+                <tr style="font-size:18px; font-weight:bold;"><td>Net Salary:</td><td>Rs <span id="print-net"></span></td></tr>
+            </table>
+            <hr style="margin-top:20px;">
+            <p style="text-align:center; font-size:12px; color:gray;">This is a system-generated payslip.</p>
+        </div>
+    </div>
+
+    <script>
+        let selectedEmployee = null;
+
+        // Set current month
+        const now = new Date();
+        const monthYear = now.toLocaleString('default', { month: 'long', year: 'numeric' });
+
+        // Load payslip table
+        function loadPayslips() {
+            fetch("http://localhost:5000/payroll")
+                .then(res => res.json())
+                .then(data => {
+                    const table = document.getElementById("payslipTable");
+                    table.innerHTML = "";
+
+                    let totalOvertime = 0;
+                    let totalDeductions = 0;
+
+                    data.forEach(emp => {
+                        totalOvertime += emp.overtime || 0;
+                        totalDeductions += emp.deductions || 0;
+
+                        const row = document.createElement("tr");
+                        const statusClass = emp.payroll_status === "Paid" ? "active" : "pending";
+
+                        row.innerHTML = `
+                            <td>${emp.name}</td>
+                            <td>Rs ${emp.basic_salary}</td>
+                            <td>Rs ${emp.deductions}</td>
+                            <td>Rs ${emp.overtime}</td>
+                            <td>Rs ${emp.net_salary}</td>
+                            <td><span class="stat ${statusClass}">${emp.payroll_status}</span></td>
+                        `;
+
+                        row.onclick = () => showDetails(emp);
+                        table.appendChild(row);
+                    });
+
+                    document.getElementById("totalPayslips").innerText = data.length;
+                    document.getElementById("totalOvertime").innerText = `Rs ${totalOvertime}`;
+                    document.getElementById("totalDeductions").innerText = `Rs ${totalDeductions}`;
+                });
+        }
+
+        // Show details in sec2
+        function showDetails(emp) {
+            selectedEmployee = emp;
+
+            document.getElementById("detail-name").innerText = emp.name;
+            document.getElementById("detail-position").innerText = emp.position;
+            document.getElementById("detail-department").innerText = emp.department;
+            document.getElementById("detail-joining").innerText = emp.joining_date || "—";
+            document.getElementById("detail-basic").innerText = emp.basic_salary;
+            document.getElementById("detail-overtime").innerText = emp.overtime || 0;
+            document.getElementById("detail-deductions").innerText = emp.deductions || 0;
+            document.getElementById("detail-net").innerText = emp.net_salary;
+            document.getElementById("detail-status").innerText = emp.payroll_status;
+
+            document.getElementById("printBtn").style.display = "block";
+        }
+
+        // Print payslip
+        function printPayslip() {
+            if (!selectedEmployee) return;
+
+            // Fill print template
+            document.getElementById("print-month").innerText = monthYear;
+            document.getElementById("print-name").innerText = selectedEmployee.name;
+            document.getElementById("print-position").innerText = selectedEmployee.position;
+            document.getElementById("print-department").innerText = selectedEmployee.department;
+            document.getElementById("print-joining").innerText = selectedEmployee.joining_date || "—";
+            document.getElementById("print-basic").innerText = selectedEmployee.basic_salary;
+            document.getElementById("print-overtime").innerText = selectedEmployee.overtime || 0;
+            document.getElementById("print-deductions").innerText = selectedEmployee.deductions || 0;
+            document.getElementById("print-net").innerText = selectedEmployee.net_salary;
+
+            // Show print area and trigger print
+            const printArea = document.getElementById("printArea");
+            printArea.style.display = "block";
+
+            window.print();
+
+            // Hide again after print
+            printArea.style.display = "none";
+        }
+
+        document.addEventListener("DOMContentLoaded", loadPayslips);
+    </script>
+
+    <!-- Print styles: hide everything except printArea when printing -->
+    <style>
+        @media print {
+            body * { visibility: hidden; }
+            #printArea, #printArea * { visibility: visible; }
+            #printArea {
+                display: block !important;
+                position: absolute;
+                left: 0;
+                top: 0;
+            }
+        }
+    </style>
 </body>
 </html>

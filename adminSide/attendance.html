@@ -6,6 +6,8 @@
     <title>Attendance - Admin</title>
     <link rel="stylesheet" href="./CSS files/dashboard.css">
     <link rel="stylesheet" href="./CSS files/attendance.css">
+    <link rel="stylesheet" href="./CSS files/header.css">
+    <script src="./JS File/header.js" defer></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -47,32 +49,49 @@
                     <h1>Attendance</h1>
                 </div>
                 <div class="header-actions">
-                    <input type="text" placeholder="search now" class="search">
-                    <span class="material-icons">notifications</span>
-                    <span class="material-icons account">account_circle</span>
+                    <div class="notif-wrapper">
+        <span class="material-icons" id="notifBtn" onclick="toggleNotifications()">notifications</span>
+        <span class="notif-badge" id="notifBadge">0</span>
+
+        <!-- Notification Dropdown -->
+        <div class="notif-dropdown" id="notifDropdown">
+            <h4>Leave Requests</h4>
+            <div class="notif-list" id="notifList">
+                <p class="notif-empty">Loading...</p>
+            </div>
+        </div>
+    </div>
                 </div>
             </header>
 
             <!-- Stats Cards -->
             <section class="stats-cards">
                 <div class="card card1">
-                    <span class="material-icons">check_circle</span>
-                    <p>Presence</p>
+                    <div class="card-top">
+                        <span class="material-icons">check_circle</span>
+                        <p>Presence</p>
+                    </div>
                     <h2 id="presenceCount">-</h2>
                 </div>
                 <div class="card card3">
-                    <span class="material-icons">groups</span>
-                    <p>Absence</p>
+                    <div class="card-top">
+                        <span class="material-icons">groups</span>
+                        <p>Absence</p>
+                    </div>
                     <h2 id="absenceCount">-</h2>
                 </div>
                 <div class="card card2">
-                    <span class="material-icons">groups</span>
-                    <p>Overtime</p>
+                    <div class="card-top">
+                        <span class="material-icons">groups</span>
+                        <p>Overtime</p>
+                    </div>
                     <h2 id="overtimeCount">-</h2>
                 </div>
                 <div class="card card4">
-                    <span class="material-icons">check_circle</span>
-                    <p>Late</p>
+                    <div class="card-top">
+                        <span class="material-icons">check_circle</span>
+                        <p>Late</p>
+                    </div>
                     <h2 id="lateCount">-</h2>
                 </div>
             </section>
