@@ -142,7 +142,7 @@
     <script>
         // Load attendance from backend
         function loadAttendance() {
-            fetch("http://localhost:5000/employees")
+            fetch("http://localhost:5000/attendance")
                 .then(res => res.json())
                 .then(data => {
                     const table = document.getElementById("attendanceTable");
@@ -151,21 +151,32 @@
                     data.forEach(record => {
                         const row = document.createElement("tr");
 
-                        // Assign class based on status (on-time, late, overtime)
-                        // let statusClass = "on-time";
-                        // if (record.status.toLowerCase() === "late") statusClass = "late";
-                        // else if (record.status.toLowerCase() === "overtime") statusClass = "overtime";
+                        // Format times
+                        const checkIn = record.check_in
+                            ? new Date(record.check_in).toLocaleTimeString()
+                            : "-";
+
+                        const checkOut = record.check_out
+                            ? new Date(record.check_out).toLocaleTimeString()
+                            : "-";
+
+                        const date = record.date
+                            ? new Date(record.date).toLocaleDateString()
+                            : "-";
 
                         row.innerHTML = `
-                            <td>${record.name}</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</td>
+                            <td>${record.employee_name}</td>
+                            <td>${checkIn}</td>
+                            <td>${checkOut}</td>
+                            <td>${date}</td>
                             <td><span class="stat ${record.status.toLowerCase()}">${record.status}</span></td>
                         `;
 
-                        // Click row to show details
-                        row.addEventListener("click", () => showEmployeeDetails(record));
+                        row.addEventListener("click", () => showEmployeeDetails({
+                            name: record.employee_name,
+                            position: record.position,
+                            department: record.department
+                        }));
 
                         table.appendChild(row);
                     });

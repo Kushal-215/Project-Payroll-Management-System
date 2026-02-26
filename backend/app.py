@@ -107,6 +107,7 @@ def execute_db(query, args=()):
 
 @app.route("/")
 def home():
+    mark_absent_employees()
     return "Payroll Backend is running."
 
 # ── Login ──────────────────────────────────────────────────
@@ -129,9 +130,19 @@ def login():
         # Check if already checked in
         existing = query_db("SELECT * FROM attendance WHERE employee_id=? AND date=?", (emp_id, today), one=True)
         if not existing:
-            now = datetime.datetime.now().isoformat()
-            execute_db("INSERT INTO attendance (employee_id, date, check_in, status) VALUES (?, ?, ?, ?)",
-                       (emp_id, today, now, "On time"))
+            now = datetime.datetime.now()
+            checkin_time = now.time()
+            nine_am = datetime.time(9, 0, 0)
+
+            if checkin_time > nine_am:
+                status = "Late"
+            else:
+                status = "On time"
+
+            execute_db(
+                "INSERT INTO attendance (employee_id, date, check_in, status) VALUES (?, ?, ?, ?)",
+                (emp_id, today, now.isoformat(), status)
+            )
         return jsonify({"success": True, "id": emp_id, "name": row["name"], "role": row["role"]})
 
     # Optional: check admin table if role is admin
@@ -145,6 +156,25 @@ def login():
 
     return jsonify({"success": False, "message": "Invalid username or password"}), 401
 
+#Mark Absent Employees
+def mark_absent_employees():
+    today = datetime.date.today().isoformat()
+
+    employees = query_db("SELECT id FROM employees")
+
+    for emp in employees:
+        existing = query_db(
+            "SELECT id FROM attendance WHERE employee_id=? AND date=?",
+            (emp["id"], today),
+            one=True
+        )
+
+        if not existing:
+            execute_db(
+                "INSERT INTO attendance (employee_id, date, status) VALUES (?, ?, ?)",
+                (emp["id"], today, "Absent")
+            )
+
 #Logout route to update check_out time
 @app.route("/user/<int:emp_id>/logout", methods=["POST"])
 def logout(emp_id):
@@ -152,7 +182,25 @@ def logout(emp_id):
     now = datetime.datetime.now().isoformat()
     record = query_db("SELECT * FROM attendance WHERE employee_id=? AND date=?", (emp_id, today), one=True)
     if record:
-        execute_db("UPDATE attendance SET check_out=? WHERE employee_id=? AND date=?", (now, emp_id, today))
+        now_dt = datetime.datetime.now()
+        check_out_time = now_dt.time()
+        five_pm = datetime.time(17, 0, 0)
+
+        record = query_db(
+            "SELECT status FROM attendance WHERE employee_id=? AND date=?",
+            (emp_id, today),
+            one=True
+        )
+
+        new_status = record["status"]
+
+        if check_out_time > five_pm:
+            new_status = "Overtime"
+
+        execute_db(
+            "UPDATE attendance SET check_out=?, status=? WHERE employee_id=? AND date=?",
+            (now_dt.isoformat(), new_status, emp_id, today)
+        )
         return jsonify({"message": "Checked out successfully"})
     return jsonify({"error": "No check-in record found for today"}), 400
 
