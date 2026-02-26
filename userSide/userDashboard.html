@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - User</title>
     <link rel="stylesheet" href="./userCSS/userDashboard.css">
+    <script src="../JS File/userHeader.js" defer></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -27,12 +28,10 @@
         <main class="main-content">
             <header class="header">
                 <div class="welcome">
-                    Welcome, <span id="username">Loading...</span>
+                    Welcome, <span class="username" id="username">Loading...</span>
                     <h1>Dashboard Overview</h1>
                 </div>
-                <div class="header-actions">
-                    <span class="material-icons account">account_circle</span>
-                </div>
+                
             </header>
 
             <section class="stats-cards">
@@ -90,10 +89,19 @@
         const empId = localStorage.getItem("empId") || 1;
 
         async function loadUser() {
-            const res = await fetch(`${API}/user/${empId}`);
-            const user = await res.json();
-            document.getElementById("username").textContent = user.name;
-        }
+    const usernameSpan = document.getElementById("username");
+    usernameSpan.textContent = "Loading..."; // show loading while fetching
+
+    try {
+        const res = await fetch(`${API}/user/${empId}`);
+        if (!res.ok) throw new Error("User not found");
+        const user = await res.json();
+        usernameSpan.textContent = user.name; // set the employee name
+    } catch (err) {
+        console.error(err);
+        usernameSpan.textContent = "User"; // fallback if fetch fails
+    }
+}
 
         async function loadAttendance() {
             const res = await fetch(`${API}/user/${empId}/attendance`);
@@ -138,8 +146,13 @@
         }
 
         function logout() {
-            localStorage.clear();
-            window.location.href = "../public/login.html";
+            const empId = localStorage.getItem("empId");
+            fetch(`http://localhost:5000/user/${empId}/logout`, {
+                method: "POST",
+            }).finally(() => {
+                localStorage.clear();
+                window.location.href = "../public/login.html";
+            });
         }
 
         loadUser();

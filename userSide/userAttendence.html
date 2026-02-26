@@ -6,6 +6,7 @@
     <title>Attendance - User</title>
     <link rel="stylesheet" href="./userCSS/userDashboard.css">
     <link rel="stylesheet" href="./userCSS/userAttendence.css">
+    <script src="../JS File/userHeader.js" defer></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -28,12 +29,10 @@
         <main class="main-content">
             <header class="header">
                 <div class="welcome">
-                    Welcome, <span id="username">Loading...</span>
+                    Welcome, <span class="username">Loading...</span>
                     <h1>Attendance</h1>
                 </div>
-                <div class="header-actions">
-                    <span class="material-icons account">account_circle</span>
-                </div>
+                
             </header>
 
             <section class="stats-cards">
@@ -120,8 +119,13 @@
         }
 
         function logout() {
-            localStorage.clear();
-            window.location.href = "../public/login.html";
+            const empId = localStorage.getItem("empId");
+            fetch(`http://localhost:5000/user/${empId}/logout`, {
+                method: "POST",
+            }).finally(() => {
+                localStorage.clear();
+                window.location.href = "../public/login.html";
+            });
         }
 
         loadUser();

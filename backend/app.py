@@ -17,19 +17,20 @@ def init_db():
     cursor = conn.cursor()
 
     cursor.execute("""
-        CREATE TABLE IF NOT EXISTS employees (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            position TEXT,
-            department TEXT,
-            joining_date TEXT,
-            basic_salary REAL,
-            payroll_status TEXT DEFAULT 'Pending',
-            status TEXT,
-            password TEXT,
-            role TEXT DEFAULT 'user'
-        )
-    """)
+    CREATE TABLE IF NOT EXISTS employees (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        name TEXT NOT NULL,
+        username TEXT UNIQUE NOT NULL,       -- add this
+        password TEXT NOT NULL,              -- make password required
+        position TEXT,
+        department TEXT,
+        joining_date TEXT,
+        basic_salary REAL,
+        payroll_status TEXT DEFAULT 'Pending',
+        status TEXT,
+        role TEXT DEFAULT 'user'
+    )
+""")
 
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS announcements (
@@ -45,6 +46,8 @@ def init_db():
             employee_id INTEGER,
             date TEXT,
             status TEXT,
+            check_in TEXT,
+            check_out TEXT,
             FOREIGN KEY (employee_id) REFERENCES employees (id)
         )
     """)
@@ -110,14 +113,50 @@ def home():
 @app.route("/login", methods=["POST"])
 def login():
     data = request.json
+    username = data.get("username")
+    password = data.get("password")
+
+    # Check employee table first
     row = query_db(
-        "SELECT id, name, role FROM employees WHERE name=? AND password=?",
-        (data.get("name"), data.get("password")),
+        "SELECT id, name, role FROM employees WHERE username=? AND password=?",
+        (data.get("username"), data.get("password")),
+        one=True
+    )
+
+    if row:
+        emp_id = row["id"]
+        today = datetime.date.today().isoformat()
+        # Check if already checked in
+        existing = query_db("SELECT * FROM attendance WHERE employee_id=? AND date=?", (emp_id, today), one=True)
+        if not existing:
+            now = datetime.datetime.now().isoformat()
+            execute_db("INSERT INTO attendance (employee_id, date, check_in, status) VALUES (?, ?, ?, ?)",
+                       (emp_id, today, now, "On time"))
+        return jsonify({"success": True, "id": emp_id, "name": row["name"], "role": row["role"]})
+
+    # Optional: check admin table if role is admin
+    row = query_db(
+        "SELECT id, name FROM admin WHERE name=? AND password=?",
+        (username, password),
         one=True
     )
     if row:
-        return jsonify({"success": True, "name": row["name"], "role": row["role"]})
+        return jsonify({"success": True, "id": row["id"], "name": row["name"], "role": "admin"})
+
     return jsonify({"success": False, "message": "Invalid username or password"}), 401
+
+#Logout route to update check_out time
+@app.route("/user/<int:emp_id>/logout", methods=["POST"])
+def logout(emp_id):
+    today = datetime.date.today().isoformat()
+    now = datetime.datetime.now().isoformat()
+    record = query_db("SELECT * FROM attendance WHERE employee_id=? AND date=?", (emp_id, today), one=True)
+    if record:
+        execute_db("UPDATE attendance SET check_out=? WHERE employee_id=? AND date=?", (now, emp_id, today))
+        return jsonify({"message": "Checked out successfully"})
+    return jsonify({"error": "No check-in record found for today"}), 400
+
+
 
 # ── Employees ──────────────────────────────────────────────
 @app.route("/employees", methods=["GET"])
@@ -128,18 +167,13 @@ def get_employees():
 @app.route("/add_employee", methods=["POST"])
 def add_employee():
     data = request.json or {}
-    required_fields = ["name", "position", "department", "basic_salary", "status"]
+    required_fields = ["name", "username", "password", "position", "department", "basic_salary", "status"]
     for field in required_fields:
         if field not in data:
             return jsonify({"error": f"'{field}' is required"}), 400
-    try:
-        basic_salary = int(data["basic_salary"])
-    except (ValueError, TypeError):
-        return jsonify({"error": "basic_salary must be a number"}), 400
-
     emp_id = execute_db(
-        "INSERT INTO employees (name, position, department, basic_salary, status, joining_date) VALUES (?, ?, ?, ?, ?, ?)",
-        (data["name"], data["position"], data["department"], basic_salary, data["status"], data.get("joining_date", ""))
+        "INSERT INTO employees (name, username, password, position, department, basic_salary, status, joining_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+        (data["name"], data["username"], data["password"], data["position"], data["department"], data["basic_salary"], data["status"], data.get("joining_date", ""))
     )
     return jsonify({"message": "Employee added successfully", "id": emp_id})
 
@@ -169,7 +203,7 @@ def employee_stats():
 def get_attendance():
     rows = query_db("""
         SELECT a.id, e.name AS employee_name, e.position, e.department,
-               e.basic_salary, e.joining_date, a.date, a.status
+               a.date, a.check_in, a.check_out, a.status
         FROM attendance a
         JOIN employees e ON a.employee_id = e.id
         ORDER BY a.date DESC
@@ -288,20 +322,23 @@ def update_leave_request(id):
     execute_db("UPDATE leave_requests SET status=? WHERE id=?", (data["status"], id))
     return jsonify({"message": f"Leave request {data['status']}"})
 
-# ---------- Run ----------
-if __name__ == "__main__":
-    init_db()
-    app.run(debug=True)
-
-
 # ── User Side Routes ───────────────────────────────────────
 
 # Get single employee profile
 @app.route("/user/<int:emp_id>", methods=["GET"])
 def get_user(emp_id):
-    row = query_db("SELECT id, name, position, department, joining_date, basic_salary, status FROM employees WHERE id=?", (emp_id,), one=True)
-    return jsonify(dict(row)) if row else jsonify({"error": "User not found"}), 404
-
+    try:
+        row = query_db(
+            "SELECT id, name, username, role FROM employees WHERE id=?",
+            (emp_id,), one=True
+        )
+        if row:
+            return jsonify(dict(row))
+        else:
+            return jsonify({"error": f"User with ID {emp_id} not found"}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
 # Get employee attendance for current month
 @app.route("/user/<int:emp_id>/attendance", methods=["GET"])
 def get_user_attendance(emp_id):
@@ -338,19 +375,50 @@ def get_user_payroll(emp_id):
     if not emp:
         return jsonify({"error": "Employee not found"}), 404
     emp = dict(emp)
-    overtime_days = query_db("SELECT COUNT(*) FROM attendance WHERE employee_id=? AND status='Overtime'", (emp_id,), one=True)[0]
-    absent_days = query_db("SELECT COUNT(*) FROM attendance WHERE employee_id=? AND status='Absent'", (emp_id,), one=True)[0]
-    overtime_pay = overtime_days * 500
-    deductions = absent_days * 500
-    net_salary = (emp["basic_salary"] or 0) + overtime_pay - deductions
+    
+    # count attendance types
+    overtime_days = query_db(
+        "SELECT COUNT(*) FROM attendance WHERE employee_id=? AND status='Overtime'",
+        (emp_id,), one=True
+    )[0]
+
+    absent_days = query_db(
+        "SELECT COUNT(*) FROM attendance WHERE employee_id=? AND status='Absent'",
+        (emp_id,), one=True
+    )[0]
+
+    late_days = query_db(
+        "SELECT COUNT(*) FROM attendance WHERE employee_id=? AND status='Late'",
+        (emp_id,), one=True
+    )[0]
+
+    # calculations
+    overtime_bonus = overtime_days * 500
+    absence_deduction = absent_days * 500
+    late_deduction = late_days * 250
+
+    total_deductions = absence_deduction + late_deduction
+
+    net_salary = (emp["basic_salary"] or 0) + overtime_bonus - total_deductions
+
     return jsonify({
         "name": emp["name"],
         "position": emp["position"],
         "department": emp["department"],
         "joining_date": emp["joining_date"],
         "basic_salary": emp["basic_salary"] or 0,
-        "overtime": overtime_pay,
-        "deductions": deductions,
+        "overtime_days": overtime_days,
+        "bonus": overtime_bonus,
+        "absent_days": absent_days,
+        "late_days": late_days,
+        "deductions": total_deductions,
         "net_salary": net_salary,
         "payroll_status": emp.get("payroll_status") or "Pending"
     })
+
+# ---------- Run ----------
+if __name__ == "__main__":
+    init_db()
+    app.run(debug=True)
+
+

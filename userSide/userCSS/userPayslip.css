@@ -1,14 +1,25 @@
-.payslip{
+.dashboard-container {
+    min-height: 100vh; /* full screen height */
+    display: flex;
+}
+
+.main-content {
+    flex: 1;
+    padding: 20px; /* optional */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 30px;
-    padding: 30px;
-    max-width: 700px;
-    width: 100%;
+}
+
+.payslip {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* keep horizontal centering */
+    justify-content: flex-start; /* push content to top instead of center */
+    gap: 20px;
+    padding: 15px 20px;
+    max-width: 600px;
+    width: 90%;
     margin: auto;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 .payHead
 {
@@ -32,8 +43,10 @@
 }
 .info {
   display: flex;
-  justify-content: space-between;
-  margin-top: 25px;
+  justify-content: space-between 15px;
+  gap: 15px 50px;
+  margin-top: 35px;
+
 }
 .info p{
     margin: 10px 0;
@@ -57,4 +70,10 @@ hr {
 
 .indent {
   padding-left: 20px;
+}
+.dashboard-sections {
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    max-height: calc(100vh - 320px);
 }

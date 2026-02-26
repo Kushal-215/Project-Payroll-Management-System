@@ -43,13 +43,6 @@
                      <input type="password" id="password" placeholder="Enter your password" required>
             </div>
 
-            <div class="options">
-                <label>
-                    <input type="checkbox"> Remember me
-                </label>
-                <a href="#">Forgot password?</a>
-            </div>
-
             <button type="submit">Login</button>
 
             <p class="role-text">Access provided based on your role (Admin/User)</p>
@@ -62,64 +55,42 @@
 const API = "http://localhost:5000";
 
 document.getElementById("loginForm").addEventListener("submit", async function(e) {
-
     e.preventDefault();
 
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
     const role = document.querySelector('input[name="role"]:checked').value;
-    console.log("Logging in with", { username, password, role });
+
     try {
-
-        const res = await fetch("http://localhost:5000/login", {
-
+        const res = await fetch(`${API}/login`, {
             method: "POST",
-
-            headers: {
-                "Content-Type": "application/json"
-            },
-
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                name: username,
+                username: username,
                 password: password
             })
-
         });
 
         const data = await res.json();
 
-        if(data.success) {
-
-            // store session
-            localStorage.setItem("empId", data.id);
+        if (data.success) {
+            localStorage.setItem("empId", data.id);  // <-- this is step 4
             localStorage.setItem("name", data.name);
             localStorage.setItem("role", data.role);
 
-            // redirect based on role
-            if(data.role === "admin") {
-
+            if (data.role === "admin") {
                 window.location.href = "../adminSide/dashboard.html";
-
             } else {
-
                 window.location.href = "../userSide/userDashboard.html";
-
             }
-
         } else {
-
             alert("Login failed: " + data.message);
-
         }
-
     } catch(error) {
-
         alert("Server error. Is backend running?");
-
+        console.error(error);
     }
-
 });
-
 </script>
 </body>
 </html>

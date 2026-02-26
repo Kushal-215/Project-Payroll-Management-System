@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="./CSS files/dashboard.css">
     <link rel="stylesheet" href="./CSS files/employee.css">
     <link rel="stylesheet" href="./CSS files/header.css">
-    <script src="./JS File/header.js" defer></script>
+    <script src="../JS File/header.js" defer></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -41,9 +41,7 @@
             </nav>
             <!-- Sidebar Footer -->
             <div class="sidebar-footer">
-                <a href="#" class="menu-item">
-                    <span class="material-icons">settings</span> Settings
-                </a>
+                
             </div>
         </aside>
 
@@ -201,6 +199,10 @@
 
         <input type="number" id="basic_salary" placeholder="Basic Salary" required><br><br>
 
+        <input type="text" id="username" placeholder="Username" required><br><br>
+
+        <input type="password" id="password" placeholder="Password" required><br><br>
+
         <select id="status" required>
             <option value="Active">Active</option>
             <option value="Inactive">Inactive</option>
@@ -355,10 +357,6 @@ function closeConfirmPopup() {
 }
 
 
-
-
-
-
     // Call loadEmployees on page load
     document.addEventListener("DOMContentLoaded", () => {
         loadEmployees();
@@ -371,6 +369,8 @@ function closeConfirmPopup() {
 
         const data = {
             name: document.getElementById("name").value,
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value,
             position: document.getElementById("position").value,
             department: document.getElementById("department").value,
             basic_salary: parseInt(document.getElementById("basic_salary").value),

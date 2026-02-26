@@ -1,52 +1,81 @@
-
-.card1 ,.card2 ,.card3 ,.card4 {
+.card1, .card2, .card3, .card4 {
     display: flex;
     text-align: center;
     justify-content: center;
+    align-items: center;
     height: 100%;
 }
-.card .cardInfo h2{
+
+.card .cardInfo h2 {
     font-size: 46px;
     text-align: center;
-    align-items: center;
 }
-.card .cardInfo p{
+
+.card .cardInfo p {
     font-size: 18px;
     text-align: center;
-    align-items: center;
-    float: bottom;
 }
-.leaveReq{
-    display: flex;
-    margin-top: 20px;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    font-size: 20px;
-    margin-left: 30px;
-    margin: 20px 20px 20px 20px;
+
+/* Make sections fill the page */
+.dashboard-sections {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    height: calc(100vh - 320px);
+    align-items: stretch;
 }
-.leaveReq select, .leaveReq button ,.leaveReq input[type="date"]{
-    padding: 8px 12px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    background: transparent;
-    cursor: pointer;
-    font-size: 15px;
-    margin-right: 10px;
-}
-.leaveReq input[type="date"], .leaveReq select{
-    width: 500px;
-    text-align: center;
-}
-.reqDate, .leaveType{
+
+.dashboard-sections .section {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    padding: 5px;
-    font-weight: bold;
+    overflow-y: auto;
 }
-.leaveReq button{
-    background: #8B93F0;
-    border: 1px solid #281D8D;
+
+/* Compact form layout */
+.leaveReq {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 15px;
+    padding: 0 5px;
+}
+
+.reqDate, .leaveType {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.leaveReq input[type="date"],
+.leaveReq input[type="text"],
+.leaveReq select {
+    width: 100%;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    background: white;
+    font-size: 14px;
+}
+
+.leaveReq button {
+    grid-column: span 2;
+    background: linear-gradient(90deg, #ff0000, #8000ff);
+    color: white;
+    border: none;
     padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 14px;
+    width: fit-content;
+    justify-self: end;
+}
+
+#leaveMsg {
+    margin-top: 8px;
+    font-size: 13px;
+    padding: 0 5px;
 }

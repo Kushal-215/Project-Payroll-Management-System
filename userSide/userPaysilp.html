@@ -6,6 +6,7 @@
     <title>Payslip - User</title>
     <link rel="stylesheet" href="./userCSS/userDashboard.css">
     <link rel="stylesheet" href="./userCSS/userPayslip.css">
+    <script src="../JS File/userHeader.js" defer></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -28,12 +29,10 @@
         <main class="main-content">
             <header class="header">
                 <div class="welcome">
-                    Welcome, <span id="username">Loading...</span>
+                    Welcome, <span class="username" id="username">Loading...</span>
                     <h1>Payslip</h1>
                 </div>
-                <div class="header-actions">
-                    <span class="material-icons account">account_circle</span>
-                </div>
+                
             </header>
 
             <section class="dashboard-sections">
@@ -122,21 +121,38 @@
         document.getElementById("print-month").textContent = monthYear;
 
         async function loadPayslip() {
-            const res = await fetch(`${API}/user/${empId}/payroll`);
-            const data = await res.json();
+            try {
+                const res = await fetch(`${API}/user/${empId}/payroll`);
+                if (!res.ok) throw new Error(`Failed to fetch payroll: ${res.status}`);
+                const data = await res.json();
 
-            document.getElementById("username").textContent = data.name;
-            document.getElementById("empName").textContent = data.name;
-            document.getElementById("empPosition").textContent = data.position;
-            document.getElementById("empDepartment").textContent = data.department;
-            document.getElementById("empJoining").textContent = data.joining_date || "-";
-            document.getElementById("payStatus").textContent = data.payroll_status;
-            document.getElementById("basicSalary").textContent = data.basic_salary;
-            document.getElementById("overtime").textContent = data.overtime;
-            document.getElementById("deductions").textContent = data.deductions;
-            document.getElementById("netSalary").textContent = data.net_salary;
+                // Header
+                document.getElementById("username").textContent = data.name || "User";
+
+                // Payslip info
+                document.getElementById("empName").textContent = data.name || "-";
+                document.getElementById("empPosition").textContent = data.position || "-";
+                document.getElementById("empDepartment").textContent = data.department || "-";
+                document.getElementById("empJoining").textContent = data.joining_date || "-";
+                document.getElementById("payStatus").textContent = data.payroll_status || "-";
+                document.getElementById("basicSalary").textContent = data.basic_salary || 0;
+                document.getElementById("overtime").textContent = data.overtime || 0;
+                document.getElementById("deductions").textContent = data.deductions || 0;
+                document.getElementById("netSalary").textContent = data.net_salary || 0;
+            } catch (err) {
+                console.error("Failed to load payslip:", err);
+                document.getElementById("username").textContent = "User";
+                document.getElementById("empName").textContent = "-";
+                document.getElementById("empPosition").textContent = "-";
+                document.getElementById("empDepartment").textContent = "-";
+                document.getElementById("empJoining").textContent = "-";
+                document.getElementById("payStatus").textContent = "-";
+                document.getElementById("basicSalary").textContent = 0;
+                document.getElementById("overtime").textContent = 0;
+                document.getElementById("deductions").textContent = 0;
+                document.getElementById("netSalary").textContent = 0;
+            }
         }
-
         function printPayslip() {
             document.getElementById("print-name").textContent = document.getElementById("empName").textContent;
             document.getElementById("print-position").textContent = document.getElementById("empPosition").textContent;
@@ -152,8 +168,13 @@
         }
 
         function logout() {
-            localStorage.clear();
-            window.location.href = "../public/login.html";
+            const empId = localStorage.getItem("empId") || 1;
+            fetch(`http://localhost:5000/user/${empId}/logout`, {
+                method: "POST",
+            }).finally(() => {
+                localStorage.clear();
+                window.location.href = "../public/login.html";
+            });
         }
 
         loadPayslip();
