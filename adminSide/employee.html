@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Employees - Admin</title>
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="./CSS files/dashboard.css">
     <link rel="stylesheet" href="./CSS files/employee.css">
-    <!-- Google Material Icons for icons -->
+    <link rel="stylesheet" href="./CSS files/header.css">
+    <script src="./JS File/header.js" defer></script>
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -56,9 +56,49 @@
                 </div>
                 
                 <div class="header-actions">
-                    <input type="text" placeholder="search now" class="search">
-                    <span class="material-icons">notifications</span>
-                    <span class="material-icons account">account_circle</span>
+                    <div class="header-actions">
+
+                    <div class="notif-wrapper">
+                        <span class="material-icons" id="notifBtn" onclick="toggleNotifications()">notifications</span>
+                        <span class="notif-badge" id="notifBadge">0</span>
+
+                        <!-- Notification Dropdown -->
+                        <div class="notif-dropdown" id="notifDropdown">
+                            <h4>Leave Requests</h4>
+                            <div class="notif-list" id="notifList">
+                                <p class="notif-empty">Loading...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Profile Icon -->
+                    <div class="profile-wrapper">
+                        <span class="material-icons account" id="profileBtn" onclick="toggleProfile()">account_circle</span>
+
+                        <!-- Profile Dropdown -->
+                        <div class="profile-dropdown" id="profileDropdown">
+                            <a onclick="openEditProfile()">
+                                <span class="material-icons">edit</span> Edit Profile
+                            </a>
+                            <a onclick="logout()">
+                                <span class="material-icons">logout</span> Log Out
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Edit Profile Popup (add before closing body tag on EVERY page) -->
+                <div id="editProfilePopup" class="edit-profile-popup">
+                    <div class="pop-content">
+                        <span class="close" onclick="closeEditProfile()">&times;</span>
+                        <h3>Edit Profile</h3>
+                        <input type="text" id="editAdminName" placeholder="Admin Name">
+                        <input type="password" id="editAdminPassword" placeholder="New Password (leave blank to keep)">
+                        <br>
+                        <button onclick="saveProfile()">Save</button>
+                        <button class="cancel-btn" onclick="closeEditProfile()">Cancel</button>
+                    </div>
+                </div>
                 </div>
                 
             </header>

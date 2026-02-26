@@ -4,217 +4,149 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - User</title>
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="./userCSS/userDashboard.css">
-    <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <!-- Main Dashboard Container -->
     <div class="dashboard-container">
-        
-        <!-- Sidebar -->
         <aside class="sidebar">
-            <!-- Logo -->
             <div class="logo">ABC MARKETING</div>
-            <!-- Navigation Menu -->
             <nav class="menu">
-                <a href="./userDashboard.html" class="menu-item active">
-                    <span class="material-icons">home</span> Dashboard
-                </a>
-                <a href="./userAttendence.html" class="menu-item">
-                    <span class="material-icons">check_box</span> Attendence
-                </a>
-                <a href="./userAnnouncements.html" class="menu-item">
-                    <span class="material-icons">notifications</span> Announcements
-                </a>
-                <a href="./userWorkUpdates.html" class="menu-item">
-                    <span class="material-icons">mail</span> Work Updates
-                </a>
-                <a href="./userLeave.html" class="menu-item">
-                    <span class="material-icons">event_busy</span> Leave Management
-                </a>
-                <a href="./userPayslip.html" class="menu-item">
-                    <span class="material-icons">description</span> Payslip
-                </a>
+                <a href="./userDashboard.html" class="menu-item active"><span class="material-icons">home</span> Dashboard</a>
+                <a href="./userAttendence.html" class="menu-item"><span class="material-icons">check_box</span> Attendance</a>
+                <a href="./userAnnouncements.html" class="menu-item"><span class="material-icons">notifications</span> Announcements</a>
+                <a href="./userWorkUpdates.html" class="menu-item"><span class="material-icons">mail</span> Work Updates</a>
+                <a href="./userLeave.html" class="menu-item"><span class="material-icons">event_busy</span> Leave Management</a>
+                <a href="./userPaysilp.html" class="menu-item"><span class="material-icons">description</span> Payslip</a>
             </nav>
-            <!-- Sidebar Footer -->
             <div class="sidebar-footer">
-                <a href="#" class="menu-item">
-                    <span class="material-icons">settings</span> Settings
-                </a>
+                <a href="#" class="menu-item" onclick="logout()"><span class="material-icons">logout</span> Logout</a>
             </div>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Header -->
             <header class="header">
                 <div class="welcome">
                     Welcome, <span id="username">Loading...</span>
                     <h1>Dashboard Overview</h1>
                 </div>
                 <div class="header-actions">
-                    <input type="text" placeholder="search now" class="search">
-                    <span class="material-icons">notifications</span>
                     <span class="material-icons account">account_circle</span>
                 </div>
             </header>
 
-            <!-- Stats Cards -->
             <section class="stats-cards">
                 <div class="card card1">
                     <span class="material-icons">calendar_today</span>
                     <span class="cardInfo">
-                    <h3 style="font-weight: bold;">Attendence</h3>
-                    <p>Present Days : <span id="presentCount">0</span></p>
-                    <p>Absent Days : <span id="absentCount">0</span></p>
-                    <p>Late : <span id="lateCount">0</span></p>
-                    <p class="cardFooter">Attendence for this month</p>
+                        <h3>Attendance</h3>
+                        <p>Present: <span id="presentCount">0</span></p>
+                        <p>Absent: <span id="absentCount">0</span></p>
+                        <p>Late: <span id="lateCount">0</span></p>
+                        <p class="cardFooter">This month</p>
                     </span>
-                    
                 </div>
                 <div class="card card2">
                     <span class="material-icons">event_busy</span>
                     <span class="cardInfo">
-                    <h3 style="font-weight: bold;">Leave</h3>
-                    <p>Leave Balance : </p>
-                    <p>Pending: </p>
-                    <p class="cardFooter">Leave summary this month</p>
+                        <h3>Leave</h3>
+                        <p>Pending: <span id="pendingLeave">0</span></p>
+                        <p>Approved: <span id="approvedLeave">0</span></p>
+                        <p class="cardFooter">Leave summary</p>
                     </span>
                 </div>
                 <div class="card card3">
                     <span class="material-icons">update</span>
                     <span class="cardInfo">
-                    <h3 style="font-weight: bold;">Work Updates</h3>
-                    <p>New tasks: </p>
-                    <p>Pending Tasks: </p>
-                    <p class="cardFooter">Tasks of this month</p>
+                        <h3>Work Updates</h3>
+                        <p>Pending Tasks: <span id="pendingTasks">0</span></p>
+                        <p>Done: <span id="doneTasks">0</span></p>
+                        <p class="cardFooter">This month</p>
                     </span>
                 </div>
-                
             </section>
 
-            <!-- Dashboard Sections -->
             <section class="dashboard-sections">
                 <div class="section announce">
                     <h2>Announcements</h2>
-                    <hr style="background: black; height: 2px; border: none;">
-                    <ul id="announcementList">
-                        <li>Holiday Schedule for Christmas</li>
-                        <li>Please Update your KYC documents</li>
-                    </ul>
+                    <hr style="background:black; height:2px; border:none; margin:10px 0;">
+                    <ul id="announcementList"><li>Loading...</li></ul>
                 </div>
                 <div class="section atten">
-                    <h2>Attendance</h2>
+                    <h2>Recent Attendance</h2>
                     <table class="attenTable" id="attendanceTable">
                         <tr class="lined">
                             <th>Date</th>
-                            <th>Check-in</th>
-                            <th>Check-out</th>
                             <th>Status</th>
                         </tr>
-                        <tr>
-                            <td>Dec 1</td>
-                            <td>9:00 AM</td>
-                            <td>5:00 PM</td>
-                            <td>Present</td>
-                        </tr>
                     </table>
-
                 </div>
             </section>
         </main>
     </div>
+
     <script>
+        const API = "http://localhost:5000";
+        const empId = localStorage.getItem("empId") || 1;
 
-const API = "http://localhost:5000";
+        async function loadUser() {
+            const res = await fetch(`${API}/user/${empId}`);
+            const user = await res.json();
+            document.getElementById("username").textContent = user.name;
+        }
 
-// temporary logged in employee ID
-const empId = localStorage.getItem("empId") || 1;
+        async function loadAttendance() {
+            const res = await fetch(`${API}/user/${empId}/attendance`);
+            const data = await res.json();
+            let present = 0, absent = 0, late = 0;
+            const table = document.getElementById("attendanceTable");
+            data.slice(0, 5).forEach(row => {
+                if (row.status === "On time") present++;
+                if (row.status === "Absent") absent++;
+                if (row.status === "Late") late++;
+                const tr = document.createElement("tr");
+                tr.innerHTML = `<td>${row.date}</td><td>${row.status}</td>`;
+                table.appendChild(tr);
+            });
+            document.getElementById("presentCount").textContent = present;
+            document.getElementById("absentCount").textContent = absent;
+            document.getElementById("lateCount").textContent = late;
+        }
 
+        async function loadLeaveStats() {
+            const res = await fetch(`${API}/user/${empId}/leave_requests`);
+            const data = await res.json();
+            document.getElementById("pendingLeave").textContent = data.filter(r => r.status === "Pending").length;
+            document.getElementById("approvedLeave").textContent = data.filter(r => r.status === "Approved").length;
+        }
 
-// Load user profile
-async function loadUser() {
+        async function loadAnnouncements() {
+            const res = await fetch(`${API}/announcements`);
+            const data = await res.json();
+            const list = document.getElementById("announcementList");
+            if (data.length === 0) {
+                list.innerHTML = "<li>No announcements yet.</li>";
+                return;
+            }
+            list.innerHTML = data.map(a => `<li>${a.text}<br><small>${a.created_at}</small></li>`).join("");
+        }
 
-    const res = await fetch(`${API}/user/${empId}`);
-    const user = await res.json();
+        async function loadTaskStats() {
+            const tasks = JSON.parse(localStorage.getItem("tasks") || "[]");
+            document.getElementById("pendingTasks").textContent = tasks.filter(t => t.status === "Pending").length;
+            document.getElementById("doneTasks").textContent = tasks.filter(t => t.status === "Done").length;
+        }
 
-    document.getElementById("username").textContent = user.name;
+        function logout() {
+            localStorage.clear();
+            window.location.href = "../public/login.html";
+        }
 
-}
-
-
-// Load attendance stats
-async function loadAttendance() {
-
-    const res = await fetch(`${API}/user/${empId}/attendance`);
-    const data = await res.json();
-
-    let present = 0;
-    let absent = 0;
-    let late = 0;
-
-    const table = document.getElementById("attendanceTable");
-
-    data.forEach(row => {
-
-        if(row.status === "On time")
-            present++;
-
-        if(row.status === "Absent")
-            absent++;
-
-        if(row.status === "Late")
-            late++;
-
-        const tr = document.createElement("tr");
-
-        tr.innerHTML = `
-            <td>${row.date}</td>
-            <td>-</td>
-            <td>-</td>
-            <td>${row.status}</td>
-        `;
-
-        table.appendChild(tr);
-
-    });
-
-    document.getElementById("presentCount").textContent = present;
-    document.getElementById("absentCount").textContent = absent;
-    document.getElementById("lateCount").textContent = late;
-
-}
-
-
-// Load announcements
-async function loadAnnouncements() {
-
-    const res = await fetch(`${API}/announcements`);
-    const data = await res.json();
-
-    const list = document.getElementById("announcementList");
-
-    list.innerHTML = "";
-
-    data.forEach(a => {
-
-        const li = document.createElement("li");
-        li.textContent = a.text;
-
-        list.appendChild(li);
-
-    });
-
-}
-
-
-// Run everything
-loadUser();
-loadAttendance();
-loadAnnouncements();
-
-</script>
+        loadUser();
+        loadAttendance();
+        loadLeaveStats();
+        loadAnnouncements();
+        loadTaskStats();
+    </script>
 </body>
 </html>

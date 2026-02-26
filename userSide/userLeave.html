@@ -4,131 +4,200 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leave Management - User</title>
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="./userCSS/userDashboard.css">
     <link rel="stylesheet" href="./userCSS/userLeave.css">
-    <!-- Google Material Icons for icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
-    <!-- Main Dashboard Container -->
     <div class="dashboard-container">
-        
-        <!-- Sidebar -->
         <aside class="sidebar">
-            <!-- Logo -->
             <div class="logo">ABC MARKETING</div>
-            <!-- Navigation Menu -->
             <nav class="menu">
-                <a href="./userDashboard.html" class="menu-item ">
-                    <span class="material-icons">home</span> Dashboard
-                </a>
-                <a href="./userAttendence.html" class="menu-item">
-                    <span class="material-icons">check_box</span> Attendence
-                </a>
-                <a href="./userAnnouncements.html" class="menu-item">
-                    <span class="material-icons">notifications</span> Announcements
-                </a>
-                <a href="./userWorkUpdates.html" class="menu-item">
-                    <span class="material-icons">mail</span> Work Updates
-                </a>
-                <a href="./userLeave.html" class="menu-item active">
-                    <span class="material-icons">event_busy</span> Leave Management
-                </a>
-                <a href="./userPaysilp.html" class="menu-item">
-                    <span class="material-icons">description</span> Payslip
-                </a>
+                <a href="./userDashboard.html" class="menu-item"><span class="material-icons">home</span> Dashboard</a>
+                <a href="./userAttendence.html" class="menu-item"><span class="material-icons">check_box</span> Attendance</a>
+                <a href="./userAnnouncements.html" class="menu-item"><span class="material-icons">notifications</span> Announcements</a>
+                <a href="./userWorkUpdates.html" class="menu-item"><span class="material-icons">mail</span> Work Updates</a>
+                <a href="./userLeave.html" class="menu-item active"><span class="material-icons">event_busy</span> Leave Management</a>
+                <a href="./userPaysilp.html" class="menu-item"><span class="material-icons">description</span> Payslip</a>
             </nav>
-            <!-- Sidebar Footer -->
             <div class="sidebar-footer">
-                <a href="#" class="menu-item">
-                    <span class="material-icons">settings</span> Settings
-                </a>
+                <a href="#" class="menu-item" onclick="logout()"><span class="material-icons">logout</span> Logout</a>
             </div>
         </aside>
 
-        <!-- Main Content Area -->
         <main class="main-content">
-            <!-- Header -->
             <header class="header">
                 <div class="welcome">
-                    Welcome, user_name
+                    Welcome, <span id="username">Loading...</span>
                     <h1>Leave Management</h1>
                 </div>
                 <div class="header-actions">
-                    <input type="text" placeholder="search now" class="search">
-                    <span class="material-icons">notifications</span>
                     <span class="material-icons account">account_circle</span>
                 </div>
             </header>
 
-            <!-- Stats Cards -->
             <section class="stats-cards">
                 <div class="card card1">
                     <span class="cardInfo">
-                        <h2>4 </h2>
-                        <p>Total leave Days</p>
+                        <h2 id="totalLeave">0</h2>
+                        <p>Total Requests</p>
                     </span>
-                    
                 </div>
                 <div class="card card2">
-                   <span class="cardInfo">
-                        <h2>3</h2>
-                        <p>Remaining Days </p>
+                    <span class="cardInfo">
+                        <h2 id="pendingLeave">0</h2>
+                        <p>Pending</p>
                     </span>
                 </div>
                 <div class="card card3">
                     <span class="cardInfo">
-                        <h2>1</h2>
-                        <p>Leave Used</p>
+                        <h2 id="approvedLeave">0</h2>
+                        <p>Approved</p>
                     </span>
                 </div>
                 <div class="card card4">
                     <span class="cardInfo">
-                        <h2>1</h2>
-                        <p>Pending Requests</p>
+                        <h2 id="rejectedLeave">0</h2>
+                        <p>Rejected</p>
                     </span>
                 </div>
-                
             </section>
 
-            <!-- Dashboard Sections -->
             <section class="dashboard-sections">
+                <!-- Request Form -->
                 <div class="section atten">
-                    <h2>Leave Requests</h2>
+                    <h2>Request Leave</h2>
                     <div class="leaveReq">
-                    <span class="reqDate">Date<input type="date" value="Date"> </span>
-                    <span class="leaveType">
-                        Type
-                        <select name="leaveType" id="">
-                            <option value="Sick">Sick</option>
-                            <option value="Sick">Sick</option>
-                            <option value="Sick">Sick</option>
-                        </select>
-                    </span>
-                    <button>Request Leave</button>
+                        <span class="reqDate">
+                            Start Date
+                            <input type="date" id="startDate">
+                        </span>
+                        <span class="reqDate">
+                            End Date
+                            <input type="date" id="endDate">
+                        </span>
+                        <span class="leaveType">
+                            Leave Type
+                            <select id="leaveType">
+                                <option value="Sick Leave">Sick Leave</option>
+                                <option value="Annual Leave">Annual Leave</option>
+                                <option value="Emergency Leave">Emergency Leave</option>
+                                <option value="Unpaid Leave">Unpaid Leave</option>
+                            </select>
+                        </span>
+                        <span class="reqDate">
+                            Reason (optional)
+                            <input type="text" id="leaveReason" placeholder="Reason...">
+                        </span>
+                        <button onclick="submitLeave()">Request Leave</button>
+                    </div>
+                    <p id="leaveMsg"></p>
                 </div>
-                </div>
+
+                <!-- Leave History -->
                 <div class="section atten">
                     <h2>Leave History</h2>
-                    <table class="attenTable">
+                    <table class="attenTable" id="leaveTable">
                         <tr class="lined">
-                            <th>Date</th>
                             <th>Type</th>
+                            <th>Start</th>
+                            <th>End</th>
                             <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        <tr>
-                            <td>Dec 1</td>
-                            <td>Sick</td>
-                            <td>Approved</td>
-                            <td><button>View</button></td>
                         </tr>
                     </table>
-
                 </div>
             </section>
         </main>
     </div>
+
+    <script>
+        const API = "http://localhost:5000";
+        const empId = localStorage.getItem("empId") || 1;
+        let empName = "";
+
+        async function loadUser() {
+            const res = await fetch(`${API}/user/${empId}`);
+            const user = await res.json();
+            document.getElementById("username").textContent = user.name;
+            empName = user.name;
+        }
+
+        async function loadLeaveHistory() {
+            const res = await fetch(`${API}/user/${empId}/leave_requests`);
+            const data = await res.json();
+
+            document.getElementById("totalLeave").textContent = data.length;
+            document.getElementById("pendingLeave").textContent = data.filter(r => r.status === "Pending").length;
+            document.getElementById("approvedLeave").textContent = data.filter(r => r.status === "Approved").length;
+            document.getElementById("rejectedLeave").textContent = data.filter(r => r.status === "Rejected").length;
+
+            const table = document.getElementById("leaveTable");
+            // Remove old rows except header
+            while (table.rows.length > 1) table.deleteRow(1);
+
+            if (data.length === 0) {
+                table.innerHTML += `<tr><td colspan="4">No leave requests yet</td></tr>`;
+                return;
+            }
+
+            data.forEach(r => {
+                const statusClass = r.status.toLowerCase();
+                const tr = document.createElement("tr");
+                tr.innerHTML = `
+                    <td>${r.leave_type}</td>
+                    <td>${r.start_date}</td>
+                    <td>${r.end_date}</td>
+                    <td><span class="stat ${statusClass}">${r.status}</span></td>
+                `;
+                table.appendChild(tr);
+            });
+        }
+
+        async function submitLeave() {
+            const startDate = document.getElementById("startDate").value;
+            const endDate = document.getElementById("endDate").value;
+            const leaveType = document.getElementById("leaveType").value;
+            const reason = document.getElementById("leaveReason").value;
+            const msg = document.getElementById("leaveMsg");
+
+            if (!startDate || !endDate) {
+                msg.textContent = "Please select start and end dates.";
+                msg.style.color = "red";
+                return;
+            }
+
+            const res = await fetch(`${API}/leave_requests`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    employee_id: empId,
+                    employee_name: empName,
+                    leave_type: leaveType,
+                    start_date: startDate,
+                    end_date: endDate,
+                    reason: reason
+                })
+            });
+
+            const result = await res.json();
+            msg.textContent = result.message;
+            msg.style.color = "green";
+
+            // Reset form
+            document.getElementById("startDate").value = "";
+            document.getElementById("endDate").value = "";
+            document.getElementById("leaveReason").value = "";
+
+            loadLeaveHistory();
+        }
+
+        function logout() {
+            localStorage.clear();
+            window.location.href = "../public/login.html";
+        }
+
+        loadUser();
+        loadLeaveHistory();
+    </script>
 </body>
 </html>
