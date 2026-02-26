@@ -51,7 +51,7 @@
             <!-- Header -->
             <header class="header">
                 <div class="welcome">
-                    Welcome, user_name
+                    Welcome, <span id="username">Loading...</span>
                     <h1>Dashboard Overview</h1>
                 </div>
                 <div class="header-actions">
@@ -67,9 +67,9 @@
                     <span class="material-icons">calendar_today</span>
                     <span class="cardInfo">
                     <h3 style="font-weight: bold;">Attendence</h3>
-                    <p>Present Days : </p>
-                    <p>Absent Days : </p>
-                    <p>Late : </p>
+                    <p>Present Days : <span id="presentCount">0</span></p>
+                    <p>Absent Days : <span id="absentCount">0</span></p>
+                    <p>Late : <span id="lateCount">0</span></p>
                     <p class="cardFooter">Attendence for this month</p>
                     </span>
                     
@@ -100,14 +100,14 @@
                 <div class="section announce">
                     <h2>Announcements</h2>
                     <hr style="background: black; height: 2px; border: none;">
-                    <ul>
+                    <ul id="announcementList">
                         <li>Holiday Schedule for Christmas</li>
                         <li>Please Update your KYC documents</li>
                     </ul>
                 </div>
                 <div class="section atten">
                     <h2>Attendance</h2>
-                    <table class="attenTable">
+                    <table class="attenTable" id="attendanceTable">
                         <tr class="lined">
                             <th>Date</th>
                             <th>Check-in</th>
@@ -126,5 +126,95 @@
             </section>
         </main>
     </div>
+    <script>
+
+const API = "http://localhost:5000";
+
+// temporary logged in employee ID
+const empId = localStorage.getItem("empId") || 1;
+
+
+// Load user profile
+async function loadUser() {
+
+    const res = await fetch(`${API}/user/${empId}`);
+    const user = await res.json();
+
+    document.getElementById("username").textContent = user.name;
+
+}
+
+
+// Load attendance stats
+async function loadAttendance() {
+
+    const res = await fetch(`${API}/user/${empId}/attendance`);
+    const data = await res.json();
+
+    let present = 0;
+    let absent = 0;
+    let late = 0;
+
+    const table = document.getElementById("attendanceTable");
+
+    data.forEach(row => {
+
+        if(row.status === "On time")
+            present++;
+
+        if(row.status === "Absent")
+            absent++;
+
+        if(row.status === "Late")
+            late++;
+
+        const tr = document.createElement("tr");
+
+        tr.innerHTML = `
+            <td>${row.date}</td>
+            <td>-</td>
+            <td>-</td>
+            <td>${row.status}</td>
+        `;
+
+        table.appendChild(tr);
+
+    });
+
+    document.getElementById("presentCount").textContent = present;
+    document.getElementById("absentCount").textContent = absent;
+    document.getElementById("lateCount").textContent = late;
+
+}
+
+
+// Load announcements
+async function loadAnnouncements() {
+
+    const res = await fetch(`${API}/announcements`);
+    const data = await res.json();
+
+    const list = document.getElementById("announcementList");
+
+    list.innerHTML = "";
+
+    data.forEach(a => {
+
+        const li = document.createElement("li");
+        li.textContent = a.text;
+
+        list.appendChild(li);
+
+    });
+
+}
+
+
+// Run everything
+loadUser();
+loadAttendance();
+loadAnnouncements();
+
+</script>
 </body>
 </html>

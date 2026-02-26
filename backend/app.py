@@ -17,7 +17,6 @@ def init_db():
     cursor = conn.cursor()
 
     # Employees table
-    # NOTE: using basic_salary consistently (was 'salary' before — this caused a bug)
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS employees (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,7 +26,16 @@ def init_db():
             joining_date TEXT,
             basic_salary REAL,
             payroll_status TEXT DEFAULT 'Pending',
-            status TEXT
+            status TEXT,
+            password TEXT,
+                   role TEXT DEFAULT 'user'
+        )
+    """)
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS announcements (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            text TEXT NOT NULL,
+            created_at TEXT 
         )
     """)
 
@@ -53,6 +61,41 @@ def get_db():
     return conn
 
 # ---------- Routes ----------
+@app.route("/login", methods=["POST"])
+def login():
+
+    data = request.json
+
+    name = data.get("name")
+    password = data.get("password")
+
+    with get_db() as conn:
+
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            SELECT id, name, role
+            FROM employees
+            WHERE name=? AND password=?
+        """, (name, password))
+
+        user = cursor.fetchone()
+
+        if user:
+
+            return jsonify({
+                "success": True,
+                "name": user["name"],
+                "role": user["role"]
+            })
+
+        else:
+
+            return jsonify({
+                "success": False,
+                "message": "Invalid username or password"
+            }), 401
+
 @app.route("/")
 def home():
     return "Payroll Backend is running."
@@ -107,6 +150,38 @@ def get_payroll():
 
     return jsonify(payroll_list)
 
+#Announcements Routes
+@app.route("/announcements", methods=["GET"])
+def get_announcements():
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM announcements ORDER BY created_at DESC")
+        rows = cursor.fetchall()
+    return jsonify([dict(row) for row in rows])
+
+@app.route("/announcements", methods=["POST"])
+def add_announcement():
+    data = request.json
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("INSERT INTO announcements (text, created_at) VALUES (?, ?)",
+            (data["text"], data["created_at"]))
+    return jsonify({"message": "Announcement posted"})
+
+@app.route("/announcements/<int:id>", methods=["DELETE"])
+def delete_announcement(id):
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("DELETE FROM announcements WHERE id = ?", (id,))
+    return jsonify({"message": "Announcement deleted"})
+
+@app.route("/announcements/<int:id>", methods=["PUT"])
+def edit_announcement(id):
+    data = request.json
+    with get_db() as conn:
+        cursor = conn.cursor()
+        cursor.execute("UPDATE announcements SET text = ? WHERE id = ?", (data["text"], id))
+    return jsonify({"message": "Announcement updated"})
 
 # Mark employee payroll as paid
 @app.route("/mark_paid/<int:emp_id>", methods=["PUT"])

@@ -1,98 +1,58 @@
-.sec1 p{
-    font-weight: normal;
-    font-size: 14px;
-    height: 30px;
+.report-sections {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    gap: 20px;
+    height: calc(100vh - 350px);
+    align-items: stretch;
 }
-.sec1 hr{
-    margin-top: 10px;
-    margin-bottom: 10px;
-    border: 0;
-    border-top: 0.5px solid #CBCBCB;
+.report-sections .section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
 }
 
-.sec1 .material-icons{
-    float: right;
+.sec1-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.download-btn {
     cursor: pointer;
     color: black;
     background-color: #9D9A9A;
     width: 30px;
     height: 30px;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 50%;   
+    font-size: 20px;
+    flex-shrink: 0;
 }
-.sec1 table{
-    width: 100%;
-    border: none;
-    height: auto;
 
+.download-btn:hover {
+    background-color: #777;
+    color: white;
 }
-.sec2{
-    background-color:linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%) ;
-    width: 50%;
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    flex: 1;
+    margin-top: 10px;
 }
-.stat{
-    text-align: center;
-    background-color: #68EC9D;
-    color: #19861C;
-    padding: 10px 24px;
-    border-radius: 999px;
-    font-size: 14px;
-    font-weight: 600;
-    display: inline-block;
-    min-width: 110px;
+
+.sec1 p, .sec2 p {
+    font-size: 13px;
+    color: #777;
+    margin-bottom: 5px;
+    height: auto;
 }
-.card2 .material-icons{
-    background-color: #B00F0F;
-}
-.card2{
-    background-color: #D38888;
-}   
-.dashboard-sections {
-    grid-template-columns: 66.5% 33.5%;;
-}
-.section .employee-card {
+
+.sec2 {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    width: 100%;
-    justify-content: center;
-}
-.section sec2{
-    width: auto;
-}
-.dashboard-sections h2 ,p{
-    margin: 10px;
-    padding: 10px;
-}
-.dashboard-sections .material-icons{
-    margin-right: 10px;
-    margin-top: 10px;
-
-}
-.empay{
-    width: 100%;
-    border-collapse: collapse;
-    border-spacing: 0 8px;
-}
-.empay th{
-    text-align: center;
-    padding: 10px 20px;
-    font-weight: bold;
-}
-.empay td{
-    padding: 10px 40px;
-    text-align: center;
-}
-.empay .dapay{
-    border-bottom:2px solid black;
-    border-top: 2px solid black;
-}
-.card p{
-    margin-top: -10px;
-}
-.pending {
-  background: #e6e36d;
-  color: #6a6400;
+    margin-right: 15px;
 }

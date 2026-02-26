@@ -4,42 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Report - Admin</title>
-    <!-- Link to external CSS -->
     <link rel="stylesheet" href="./CSS files/dashboard.css">
-    <link rel="stylesheet" href="./CSS files/payslip.css">
-    <!-- Google Material Icons for icons -->
+    <link rel="stylesheet" href="./CSS files/report.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
 </head>
 <body>
-    <!-- Main Dashboard Container -->
     <div class="dashboard-container">
-        
+
         <!-- Sidebar -->
         <aside class="sidebar">
-            <!-- Logo -->
             <div class="logo">ABC MARKETING</div>
-            <!-- Navigation Menu -->
             <nav class="menu">
-                <a href="./dashboard.html" class="menu-item ">
+                <a href="./dashboard.html" class="menu-item">
                     <span class="material-icons">home</span> Dashboard
                 </a>
-                <a href="./employee.html" class="menu-item ">
+                <a href="./employee.html" class="menu-item">
                     <span class="material-icons">people</span> Employees
                 </a>
-                <a  href="./attendance.html" class="menu-item">
+                <a href="./attendance.html" class="menu-item">
                     <span class="material-icons">check_box</span> Attendance
                 </a>
-                <a  href="./payroll.html" class="menu-item">
+                <a href="./payroll.html" class="menu-item">
                     <span class="material-icons">credit_card</span> Payroll
                 </a>
-                <a href="./payslip.html" class="menu-item ">
+                <a href="./payslip.html" class="menu-item">
                     <span class="material-icons">description</span> Payslip
                 </a>
-                <a href="./reportana.html" class="menu-item active">
+                <a href="./report.html" class="menu-item active">
                     <span class="material-icons">bar_chart</span> Report Analytics
                 </a>
             </nav>
-            <!-- Sidebar Footer -->
             <div class="sidebar-footer">
                 <a href="#" class="menu-item">
                     <span class="material-icons">settings</span> Settings
@@ -47,54 +42,179 @@
             </div>
         </aside>
 
-        <!-- Main Content Area -->
+        <!-- Main Content -->
         <main class="main-content">
-            <!-- Header -->
             <header class="header">
                 <div class="welcome">
                     <h1>Report and Analytics</h1>
                 </div>
-                
                 <div class="header-actions">
                     <input type="text" placeholder="search now" class="search">
                     <span class="material-icons">notifications</span>
                     <span class="material-icons account">account_circle</span>
                 </div>
-                
             </header>
+
             <!-- Stats Cards -->
             <section class="stats-cards">
                 <div class="card card1">
-                    <span class="material-icons">groups</span>
-                    <p>Total Payslip</p>
+                    <div class="card-top">
+                        <span class="material-icons">description</span>
+                        <p>Total Basic Salary</p>
+                    </div>
+                    <h2 id="totalBasic">-</h2>
                 </div>
                 <div class="card card2">
-                    <span class="material-icons">groups</span>
-                    <p>Overtime & Bonuses</p>
+                    <div class="card-top">
+                        <span class="material-icons">trending_up</span>
+                        <p>Total Overtime & Bonuses</p>
+                    </div>
+                    <h2 id="totalOvertime">-</h2>
                 </div>
                 <div class="card card3">
-                    <span class="material-icons">groups</span>
-                    <p>Deduction</p>
+                    <div class="card-top">
+                        <span class="material-icons">trending_down</span>
+                        <p>Total Deductions</p>
+                    </div>
+                    <h2 id="totalDeductions">-</h2>
                 </div>
             </section>
 
-            <!-- Dashboard Sections -->
-            <section class="dashboard-sections">
-                <span class="section-left ">
-                    <div class="section sec1">
-                        <span class="material-icons">download</span> 
+            <!-- Charts Section -->
+            <section class="dashboard-sections report-sections">
+
+                <!-- Bar Chart -->
+                <div class="section sec1">
+                    <div class="sec1-header">
                         <h2>Payroll Expenses Breakdown</h2>
-                        <p>Here is the graph, </p>
+                        <span class="material-icons download-btn" onclick="downloadBarChart()">download</span>
                     </div>
-                </span>
-                    <div class="section sec2">
-                            <span class="employee-card head">
-                                <h2>Salary Pie Chart</h2>
-                            </span>
+                    <p>Company-wide salary breakdown</p>
+                    <div class="chart-container">
+                        <canvas id="barChart"></canvas>
                     </div>
+                </div>
+
+                <!-- Pie Chart -->
+                <div class="section sec2">
+                    <h2>Salary Distribution</h2>
+                    <p>Proportion of salary components</p>
+                    <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+
             </section>
         </main>
-
     </div>
+
+    <script>
+        let barChartInstance = null;
+        let pieChartInstance = null;
+
+        function loadReportData() {
+            fetch("http://localhost:5000/payroll")
+                .then(res => res.json())
+                .then(data => {
+                    // Calculate company totals
+                    const totalBasic = data.reduce((sum, e) => sum + (e.basic_salary || 0), 0);
+                    const totalOvertime = data.reduce((sum, e) => sum + (e.overtime || 0), 0);
+                    const totalDeductions = data.reduce((sum, e) => sum + (e.deductions || 0), 0);
+
+                    // Update stat cards
+                    document.getElementById("totalBasic").innerText = `Rs ${totalBasic}`;
+                    document.getElementById("totalOvertime").innerText = `Rs ${totalOvertime}`;
+                    document.getElementById("totalDeductions").innerText = `Rs ${totalDeductions}`;
+
+                    // Draw charts
+                    drawBarChart(totalBasic, totalOvertime, totalDeductions);
+                    drawPieChart(totalBasic, totalOvertime, totalDeductions);
+                });
+        }
+
+        function drawBarChart(basic, overtime, deductions) {
+            const ctx = document.getElementById("barChart").getContext("2d");
+
+            if (barChartInstance) barChartInstance.destroy();
+
+            barChartInstance = new Chart(ctx, {
+                type: "bar",
+                data: {
+                    labels: ["Basic Salary", "Overtime & Bonuses", "Deductions"],
+                    datasets: [{
+                        label: "Amount (Rs)",
+                        data: [basic, overtime, deductions],
+                        backgroundColor: ["#AAE9D8", "#F9FDA3", "#D3A188"],
+                        borderColor: ["#12B5A2", "#A2A918", "#9D4444"],
+                        borderWidth: 2,
+                        borderRadius: 8,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => `Rs ${ctx.raw.toLocaleString()}`
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                callback: val => `Rs ${val.toLocaleString()}`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function drawPieChart(basic, overtime, deductions) {
+            const ctx = document.getElementById("pieChart").getContext("2d");
+
+            if (pieChartInstance) pieChartInstance.destroy();
+
+            pieChartInstance = new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: ["Basic Salary", "Overtime & Bonuses", "Deductions"],
+                    datasets: [{
+                        data: [basic, overtime, deductions],
+                        backgroundColor: ["#AAE9D8", "#F9FDA3", "#D3A188"],
+                        borderColor: ["#12B5A2", "#A2A918", "#9D4444"],
+                        borderWidth: 2,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: "bottom",
+                            labels: { padding: 20 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => `Rs ${ctx.raw.toLocaleString()}`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function downloadBarChart() {
+            const link = document.createElement("a");
+            link.download = "payroll_breakdown.png";
+            link.href = document.getElementById("barChart").toDataURL();
+            link.click();
+        }
+
+        document.addEventListener("DOMContentLoaded", loadReportData);
+    </script>
 </body>
 </html>
